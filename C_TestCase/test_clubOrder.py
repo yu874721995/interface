@@ -97,7 +97,7 @@ class CheckClubOrder(unittest.TestCase):
                             mylog.info('美丽金余额不足！')
                     except Exception as e:
                         mylog.error('会员卡支付失败',e)
-                    pass
+                        pass
 
 
 
