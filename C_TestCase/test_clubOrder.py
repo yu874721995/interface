@@ -26,7 +26,6 @@ class CheckClubOrder(unittest.TestCase):
         cls.xjPayUrl = GetApi('test_host', 'xjPayClub').main()
         cls.web_token = get_login.get_test_token()
 
-
     @classmethod
     def tearDownClass(cls):
         pass
