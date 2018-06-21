@@ -8,8 +8,8 @@
 from Public.Get_login_token import Get_Login
 import os,requests,sys,time,unittest
 from Public.logger import Logger
-from Public.x import GetApi
-from .Oracle import *
+from Public.get_api import GetApi
+from Public.Oracle import *
 #from functools import wraps
 from django.core.handlers import exception
 

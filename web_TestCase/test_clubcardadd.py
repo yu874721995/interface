@@ -11,10 +11,10 @@ import requests
 import unittest
 from Public.logger import Logger
 from Public.Get_login_token import Get_Login
-from Public.x import GetApi
+from Public.get_api import GetApi
 from random import randint
 import configparser
-from TestCase.Oracle import fetchOracle
+from Public.Oracle import fetchOracle
 
 mylog = Logger(logger="Interface").getlog()
 
@@ -28,9 +28,7 @@ class CheckClubAdd(unittest.TestCase):
             mylog.info(u'token生成正确......')
         else:
             print ('error',Exception)
-        clubcardadd = GetApi('Api','ClubCardAdd')
-        clubcardaddhost = GetApi('Host','test_host')
-        cls.clubcardadd = clubcardaddhost.xx()+clubcardadd.xx()
+        cls.clubcardadd = GetApi('ClubCardAdd','test_host').main()
         mylog.info(u'接口路径%s', cls.clubcardadd)
         global db
         db = fetchOracle()
@@ -52,8 +50,11 @@ class CheckClubAdd(unittest.TestCase):
             "Authorization":cls.token,
         }
         r = requests.post(cls.clubcardadd,data=data,headers=headers)
-        assert r.json()['msg'] == '添加会员卡成功'
-        print ('test pass')
+        try:
+            assert r.json()['msg'] == '添加会员卡成功'
+            mylog.info('会员卡等级添加成功')
+        except Exception as e:
+            mylog.error('会员卡等级添加失败',e)
 
     @classmethod
     def tearDownClass(cls):

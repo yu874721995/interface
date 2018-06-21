@@ -30,6 +30,9 @@ class Fenhong(object):
         token = r.json()['token']
         self.token = "Bearer " + token
         print('获取token  ok！')
+        self.proder = self.getProder()
+        self.ourpeople = self.getOurPeople()
+        self.projectClass = self.get_projectClass()
 
     #獲取項目ID，銷售員、接待員、服務技師ID、原价、实付款、数量、门店
     def getProder(self):
@@ -80,7 +83,7 @@ class Fenhong(object):
 
     #獲取品項名稱和大小類
     def get_projectClass(self):
-        value = {'ID':self.getProder()[0]}
+        value = {'ID':self.proder[0]}
         sql = "select NAME from t_project_cfg where ID = :ID"
         cursor = self.connection.cursor()
         cursor.execute(sql,value)
@@ -136,14 +139,12 @@ class Fenhong(object):
         #value = {'ID':self.getProder()[1:4]}
         queryData = []
         name = []
-        x = self.getProder()
-        for i in x[1:4]:
+        for i in self.proder[1:4]:
             value = {'ID': i}
             sql = 'select NAME,TELPHONE from m_user where ID in :ID'
             cursor = self.connection.cursor()
             cursor.execute(sql, value)
             result = cursor.fetchall()
-            print (result)
             queryData.append(result[0][1])
             name.append(result[0][0])
             cursor.close()
@@ -186,10 +187,10 @@ class Fenhong(object):
 
     #获取销售业绩提点
     def getdividends(self):
-        getprojectClass= self.get_projectClass() #------项目、类别
+        getprojectClass= self.projectClass #------项目、类别
         gatheringRate = ''#收款-------
-        big_merchant = self.getProder()[7]
-        small_merchant = self.getProder()[8]
+        big_merchant = self.proder[7]
+        small_merchant = self.proder[8]
         print (big_merchant,small_merchant)
         #没有转店
         if big_merchant == small_merchant:
@@ -444,9 +445,9 @@ class Fenhong(object):
     #获取消耗业绩提点
     def getconsume(self):
         consumeRate = ''#消耗-----
-        getprojectClass = self.get_projectClass()#----品项名称、大小类
-        big_merchant = self.getProder()[7]#-----大表
-        small_merchant = self.getProder()[8]#----小表
+        getprojectClass = self.projectClass#----品项名称、大小类
+        big_merchant = self.proder[7]#-----大表
+        small_merchant = self.proder[8]#----小表
         if big_merchant == small_merchant:
             print ('-----------------------------getconsume------------------------')
             data ={
@@ -715,9 +716,9 @@ class Fenhong(object):
         giftProject = ''  # 赠品-----
         activeRate = ''  # 特价----
         shareRate = ''  # 分享
-        getprojectClass = self.get_projectClass()#----品项名称、大小类
-        big_merchant = self.getProder()[7]#-----大表
-        small_merchant = self.getProder()[8]#----小表
+        getprojectClass = self.projectClass#----品项名称、大小类
+        big_merchant = self.proder[7]#-----大表
+        small_merchant = self.proder[8]#----小表
         if big_merchant == small_merchant:
             print ('getservice')
             data ={
@@ -1052,7 +1053,7 @@ class Fenhong(object):
     #获取销售分红提点
     def dividendsFH(self):
         mtc_id = ''#----门店ID
-        value = {'NAME':self.getOurPeople()[1]}
+        value = {'NAME':self.ourpeople[1]}
         SQL = 'select id from t_merchant where NAME = :NAME'
         try:
             cursor = self.connection.cursor()
@@ -1064,8 +1065,8 @@ class Fenhong(object):
             print (e)
         Salesperson = ''#-----月度分红
         JDSalesperson = ''#------季度分红
-        SalespersonZW = self.getOurPeople()[0]#-----销售职务
-        SalespersonMCT = self.getOurPeople()[1]#-----销售隶属门店
+        SalespersonZW = self.ourpeople[0]#-----销售职务
+        SalespersonMCT = self.ourpeople[1]#-----销售隶属门店
         data = {
             'bonusType':1,
             'keyword':'',
@@ -1102,7 +1103,7 @@ class Fenhong(object):
     # 获取消耗分红提点
     def consumeFH(self):
         mtc_id = ''  # ----门店ID
-        value = {'NAME': self.getOurPeople()[3]}
+        value = {'NAME': self.ourpeople[3]}
         SQL = 'select id from t_merchant where NAME = :NAME'
         try:
             cursor = self.connection.cursor()
@@ -1114,8 +1115,8 @@ class Fenhong(object):
             print(e)
         Receptionist = ''  # -----月度分红
         JDReceptionist = ''  # ------季度分红
-        ReceptionistZW = self.getOurPeople()[2]  # -----销售职务
-        JDReceptionistMCT = self.getOurPeople()[3]  # -----销售隶属门店
+        ReceptionistZW = self.ourpeople[2]  # -----销售职务
+        JDReceptionistMCT = self.ourpeople[3]  # -----销售隶属门店
         data = {
             'bonusType': 5,
             'keyword': '',
@@ -1152,7 +1153,7 @@ class Fenhong(object):
     #获取服务季度提点
     def serviceFH(self):
         mtc_id = ''  # ----门店ID
-        value = {'NAME': self.getOurPeople()[5]}
+        value = {'NAME': self.ourpeople[5]}
         SQL = 'select id from t_merchant where NAME = :NAME'
         try:
             cursor = self.connection.cursor()
@@ -1163,8 +1164,8 @@ class Fenhong(object):
         except Exception as e:
             print(e)
         technicianFW = ''  # -----季度分红
-        technician = self.getOurPeople()[4]  # -----技师职务
-        technicianMCT = self.getOurPeople()[5]  # -----技师隶属门店
+        technician = self.ourpeople[4]  # -----技师职务
+        technicianMCT = self.ourpeople[5]  # -----技师隶属门店
         data = {
             'bonusType': 2,
             'keyword': '',
@@ -1222,7 +1223,7 @@ class Fenhong(object):
         XH_JD = consunmeFH[1]
         FW_JD = self.serviceFH()
         ''''''
-        getProder = self.getProder()
+        getProder = self.proder
         total_amount =getProder[4]#----原价
         amount = getProder[5]#----实付款
         num = getProder[6]#----数量

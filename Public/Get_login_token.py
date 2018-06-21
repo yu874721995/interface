@@ -9,7 +9,7 @@ import json
 import time,os
 import configparser
 from Public.logger import Logger
-from Public.x import GetApi
+from Public.get_api import GetApi
 
 mylog = Logger(logger="Getlogin").getlog()
 
@@ -19,22 +19,17 @@ class Get_Login():
         '''获取平台端token'''
         config = configparser.ConfigParser()
         path = 'D:\PyCharm2017.3.2\pyfolder\InterFace\config\config.ini'
-        config.read(path)
-        mp_host = config.get("Host",'mp_host')
-        mp_login_api = config.get("Api",'mp_login')
-        mp_pic_api = config.get("Api",'picture_list')
-        mp_login_url = mp_host+mp_login_api
-        mp_pic_url = mp_host+mp_pic_api
+        config.read(path,encoding="utf-8-sig")
+        mp_login_url = GetApi('mp_host','mp_login').main()
+        mp_pic_url = GetApi('mp_host','picture_list').main()
         return mp_login_url,mp_pic_url
 
     def get_test_login_interface(self):
         '''获取商家端token'''
         config = configparser.ConfigParser()
         path = 'D:\PyCharm2017.3.2\pyfolder\InterFace\config\config.ini'
-        config.read(path)
-        mp_host = config.get('Host', 'test_host')
-        mp_login_api = config.get('Api', 'test_login')
-        mp_login_url = mp_host + mp_login_api
+        config.read(path,encoding="utf-8-sig")
+        mp_login_url = GetApi('test_host','test_login').main()
         return mp_login_url
 
     def get_mp_token(self):
@@ -60,9 +55,7 @@ class Get_Login():
         return token
 
     def get_C_token(self):
-        host = GetApi('Host','C_host')
-        api = GetApi('Api','phone_login')
-        url = host.xx() + api.xx()
+        url = GetApi('C_host','phone_login').main()
         data = {
             "MERCHANTID_C": "81136",
             "channel_code": "81136",
@@ -79,7 +72,13 @@ class Get_Login():
             "version": "1.2.20"
         }
         r = requests.post(url,data=data)
-        return r.json()['token']
+        try:
+            if r.json()['status'] != '500':
+                mylog.info('获取token成功.....')
+                return r.json()['token']
+        except Exception as e:
+            mylog.error('获取token失败')
+            return 1
 
     def get_picurl(self):
         url = self.get_mp_login_interface()[1]

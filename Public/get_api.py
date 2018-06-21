@@ -15,14 +15,15 @@ class GetApi():
 
         config = configparser.ConfigParser()
         config_path = 'D:/PyCharm2017.3.2/pyfolder/InterFace/config/config.ini'
-        config.read(config_path)
-        self.host = config.get(service,value)
+        config.read(config_path,encoding="utf-8-sig")
+        self.host = config.get('Host',service)
+        self.api = config.get('Api',value)
 
-    def xx(self):
-        return self.host
+    def main(self):
+        return self.host+self.api
 
 if __name__ == '__main__':
     x = GetApi('Host','test_host')
-    x.xx()
+    x.main()
 
 

@@ -11,7 +11,7 @@ import requests
 import unittest
 from Public.logger import Logger
 from Public.Get_login_token import Get_Login
-from Public.x import GetApi
+from Public.get_api import GetApi
 from random import randint
 import configparser
 #import pandas
