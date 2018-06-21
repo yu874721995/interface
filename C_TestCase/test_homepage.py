@@ -69,10 +69,12 @@ class Test_HomePage(unittest.TestCase):
         try:
             assert r.json()['msg'] == '登录成功'
             mylog.info('C端登录成功')
+            cls.C_token = 'Bearer' + r.json()['token']
         except Exception as e:
             mylog.error('C端登录失败！',e,r.json())
 
-
+    def return_C_Token(cls):
+        return cls.C_token
 
 if __name__ == '__main__':
     unittest.main()
