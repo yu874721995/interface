@@ -42,7 +42,6 @@ class Test_HomePage(unittest.TestCase):
             mylog.info('首页获取成功')
         except Exception as e:
             mylog.error('首页获取失败')
-        return
 
 if __name__ == '__main__':
     unittest.main()
