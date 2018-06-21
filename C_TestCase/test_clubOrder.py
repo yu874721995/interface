@@ -19,7 +19,7 @@ class CheckClubOrder(unittest.TestCase):
     def setUpClass(cls):
         get_login =Get_Login()
         if get_login.get_test_token() == 1:
-            return 1
+            return False
         cls.C_token = get_login.get_C_token()
         cls.Orderurl = GetApi('C_host', 'clubOrder').main()
         cls.ZJCpayurl = GetApi('C_host', 'mljpayclub').main()
