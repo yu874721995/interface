@@ -21,17 +21,10 @@ class CheckClubOrder(unittest.TestCase):
         if get_login.get_test_token() == 1:
             return
         cls.C_token = get_login.get_C_token()
-        host = GetApi('Host', 'C_host')
-        api = GetApi('Api', 'clubOrder')
-        cls.Orderurl = host.xx() + api.xx()
-        hosts = GetApi('Host', 'C_host')
-        apis = GetApi('Api', 'mljpayclub')
-        cls.ZJCpayurl = hosts.xx() + apis.xx()
-        web_hosts = GetApi('Host','test_host')
-        xjPayApi = GetApi('Api','xjPayClub')
-        cls.xjPayUrl = web_hosts.xx()+xjPayApi.xx()
+        cls.Orderurl = GetApi('C_host','clubOrder').main()
+        cls.ZJCpayurl = GetApi('C_host','mljpayclub').main()
+        cls.xjPayUrl = GetApi('test_host','xjPayClub').main()
         cls.web_token = get_login.get_test_token()
-
 
     @classmethod
     def tearDownClass(cls):

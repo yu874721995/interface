@@ -14,13 +14,16 @@ mylog = Logger(logger='C_log').getlog()
 
 class Test_HomePage(unittest.TestCase):
 
-    def setUp(self):
-        self.url = GetApi('C_host','C_homePage').main()
+    @classmethod
+    def setUpClass(cls):
+        cls.homePageUrl = GetApi('C_host','C_homePage').main()
+        cls.C_loginUrl = GetApi('C_host','phone_login').main()
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         pass
 
-    def test_HomePage(self):
+    def test_HomePage(cls):
         data = {
             "latitude": 0,
             "longitude": 0,
@@ -34,14 +37,42 @@ class Test_HomePage(unittest.TestCase):
             "login_merchant_id": 81136
         }
         headers = {}
-        r = requests.post(self.url,data=data,headers=headers)
+        r = requests.post(cls.homePageUrl,data=data,headers=headers)
         try:
             print(1)
             assert r.json()['status'] == 100
             print(2)
             mylog.info('首页获取成功')
         except Exception as e:
-            mylog.error('首页获取失败')
+            mylog.error('首页获取失败',e,r.json())
+
+    def test_C_login(cls):
+        data = {
+            "MERCHANTID_C":"81136",
+            "channel_code":"81136",
+            "channel_name":"GoGoBeauty",
+            "deviceos":"11.2.6",
+            "devices":"iOS",
+            "imie":"",
+            "login_merchant_id":"81136",
+            "login_token":"",
+            "mac_code":"579A1C6D-984B-4295-A86E-4BB71BCA6CB6",
+            "osversion":"11.2.6",
+            "password":"381ec9fbdfac2be30c73cf23598a8a7a",
+            "telphone":"15818758705",
+            "version":"1.2.22"
+        }
+        headers = {
+
+        }
+        r = requests.post(cls.C_loginUrl, data=data, headers=headers)
+        try:
+            assert r.json()['msg'] == '登录成功'
+            mylog.info('C端登录成功')
+        except Exception as e:
+            mylog.error('C端登录失败！',e,r.json())
+
+
 
 if __name__ == '__main__':
     unittest.main()
