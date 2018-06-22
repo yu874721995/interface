@@ -17,19 +17,50 @@ class Test_project(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.token = Test_HomePage().return_C_Token()
+        cls.token = Test_HomePage().test_C_login()
         cls.detailUrl = GetApi('C_host','c_detail').main()
+        cls.hostList = GetApi('C_host','c_projectHostList').main()
 
     @classmethod
     def tearDownClass(cls):
         pass
+
+    def test_projectHostList(cls):
+        data = {
+            "beautType": "",
+            "cMerchantId": "81136",
+            "countsum": "0",
+            "currentPrice": "1",
+            "keyWord": "",
+            "login_merchant_id": "81136",
+            "login_token": cls.token,
+            "maxPrice": "",
+            "merchantId": "81167",
+            "minPrice": "0",
+            "pageIndex": "1",
+            "requestType": "1",
+            "solveSchemes": "",
+            "userId": "183796"
+        }
+        headers = {
+            'authorization': cls.token
+        }
+        r = requests.post(cls.hostList,data=data,headers=headers)
+        response = r.json()
+        resp_code = r.status_code
+        mylog.info('热门项目列表状态码：%d' % resp_code)
+        try:
+            assert response['msg'] == '操作成功'
+            mylog.info('获取热门项目列表成功')
+        except Exception as e:
+            mylog.error('获取热门项目列表失败',e,resp_code,response)
 
     def test_projectDetail(cls):
         data = {
             "cMerchantId": "81136",
             "customerId": "195946",
             "login_merchant_id": "81136",
-            "login_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoie1wieGNfdXNlcl9pZFwiOjE5NTk0NixcInhjX21lcmNoYW50X2lkXCI6ODExMzYsXCJtYWxsX2lkXCI6MjkwODEsXCJtYWxsX3VzZXJfaWRcIjoxOTU5NDYsXCJ0aW1lc3RhbXBcIjoxNTI5NDg2MTQ1NDEzfSIsImFsZ29yaXRobSI6IkhTNTEyIiwiaWF0IjoxNTI5NDg2MTQ1LCJleHAiOjE1MzIwNzgxNDV9.LIAF5HE3QwhLQXxelr2kDPIHhK9V9HCxcbxSNcAz9u8",
+            "login_token": cls.token,
             "merchantId": "81167",
             "projectId": "40497"
         }
@@ -39,13 +70,13 @@ class Test_project(unittest.TestCase):
         r = requests.post(cls.detailUrl,data=data,headers=headers)
         response = r.json()
         response_code = r.status_code
+        mylog.info('项目详情接口状态返回值:%d' % response_code)
         try:
             assert response_code == 200
-            mylog.info('状态返回值%d' %response_code)
-            assert response[''] == ''
+            assert response['msg'] == '操作成功'
             mylog.info('获取项目详情页成功')
         except Exception as e:
-            mylog.error('获取项目详情页失败')
+            mylog.error('获取项目详情页失败',e,response)
 
 if __name__ == '__main__':
     unittest.main()
