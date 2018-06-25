@@ -15,7 +15,7 @@ report_name = 'D:\PyCharm2017.3.2\pyfolder\InterFace\Test_report\\'+str(report_t
 fp = open(report_name,'wb')
 
 testsuite = unittest.TestSuite()
-discover = unittest.defaultTestLoader.discover('club_TestCase',pattern='test_*.py',top_level_dir=None)
+discover = unittest.defaultTestLoader.discover('C_TestCase',pattern='test_*.py',top_level_dir=None)
 for testsuites in discover:
     for i in testsuites:
         testsuite.addTest(i)
