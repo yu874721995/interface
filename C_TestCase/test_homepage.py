@@ -24,6 +24,7 @@ class Test_HomePage(unittest.TestCase):
         pass
 
     def test_HomePage(cls):
+        '''获取C端首页'''
         data = {
             "latitude": 0,
             "longitude": 0,
@@ -46,7 +47,8 @@ class Test_HomePage(unittest.TestCase):
         except Exception as e:
             mylog.error('首页获取失败',e,r.json())
 
-    def test_C_login(cls):
+    def tsts_C_login(cls):
+        '''验证C端登录'''
         data = {
             "MERCHANTID_C":"81136",
             "channel_code":"81136",

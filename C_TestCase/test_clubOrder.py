@@ -16,9 +16,10 @@ mylog = Logger(logger='C_log').getlog()
 class CheckClubOrder(unittest.TestCase):
 
 
-    global order_id
+
     @classmethod
     def setUpClass(cls):
+        global order_id
         get_login =Get_Login()
         if get_login.get_test_token() == 1:
             return False
@@ -85,7 +86,7 @@ class CheckClubOrder(unittest.TestCase):
                         assert r.json()['msg'] == '余额不足'
                         mylog.info('美丽金余额不足！')
                     except Exception as e:
-                        mylog.error('美丽金支付会员卡充值卡失败！',e)
+                        mylog.error('美丽金支付会员卡充值卡失败！',e,r.json())
             elif i == 2:
                 try:
                     assert r.json()['msg'] == '此订单已支付'
@@ -98,7 +99,7 @@ class CheckClubOrder(unittest.TestCase):
                             assert r.json()['msg'] == '余额不足'
                             mylog.info('美丽金余额不足！')
                     except Exception as e:
-                        mylog.error('会员卡支付失败',e)
+                        mylog.error('会员卡支付失败',e,r.json())
 
 if __name__ == '__main__':
     unittest.main()

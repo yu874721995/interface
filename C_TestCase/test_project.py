@@ -17,7 +17,8 @@ class Test_project(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.token = Test_HomePage().test_C_login()
+        cls.homepage = Test_HomePage()
+        cls.token = cls.homepage.tsts_C_login()
         cls.detailUrl = GetApi('C_host','c_detail').main()
         cls.hostList = GetApi('C_host','c_projectHostList').main()
 

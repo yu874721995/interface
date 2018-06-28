@@ -38,10 +38,9 @@ class Detail(unittest.TestCase):
                 for s in e['subRoleFucList']:
                     if s['pid'] != e['functionId']:
                         failDetail.append(s['funcName'])
-        print (failDetail)
-        print (r.json())
         assert r.json()['msg'] == '操作成功'
         mylog.info('权限读取成功')
+        assert failDetail.__len__() < 1
 
 if __name__ == '__main__':
     unittest.main()
