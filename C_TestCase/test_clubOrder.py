@@ -15,8 +15,6 @@ mylog = Logger(logger='C_log').getlog()
 
 class CheckClubOrder(unittest.TestCase):
 
-
-
     @classmethod
     def setUpClass(cls):
         global order_id
