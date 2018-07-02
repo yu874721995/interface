@@ -36,7 +36,7 @@ class Test_project(unittest.TestCase):
             "login_merchant_id": "81136",
             "login_token": cls.token,
             "maxPrice": "",
-            "merchantId": "81167",
+            "merchantId": "",
             "minPrice": "0",
             "pageIndex": "1",
             "requestType": "1",
@@ -55,6 +55,7 @@ class Test_project(unittest.TestCase):
             mylog.info('获取热门项目列表成功')
         except Exception as e:
             mylog.error('获取热门项目列表失败',e,resp_code,response)
+            raise ValueError(e)
 
     def test_projectDetail(cls):
         data = {
@@ -78,6 +79,7 @@ class Test_project(unittest.TestCase):
             mylog.info('获取项目详情页成功')
         except Exception as e:
             mylog.error('获取项目详情页失败',e,response)
+            raise ValueError(e)
 
 if __name__ == '__main__':
     unittest.main()

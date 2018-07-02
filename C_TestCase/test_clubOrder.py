@@ -55,6 +55,7 @@ class CheckClubOrder(unittest.TestCase):
             mylog.info('生成充值卡订单OK！，订单id:%s' % order_id)
         except Exception as e:
             mylog.error('-------------------生成充值卡订单失败-------------------',e)
+            raise ValueError(e)
 
     def test_Orderzjcpay(cls):
         '''充值卡订单使用美丽金支付'''
@@ -85,11 +86,12 @@ class CheckClubOrder(unittest.TestCase):
                         mylog.info('美丽金余额不足！')
                     except Exception as e:
                         mylog.error('美丽金支付会员卡充值卡失败！',e,r.json())
+                        raise ValueError(e)
             elif i == 2:
                 try:
                     assert r.json()['msg'] == '此订单已支付'
                     mylog.info('充值卡订单已支付验证OK')
-                except Exception as e:
+                except BaseException as e:
                     try:
                         if r.json()['msg'] == '操作成功':
                             mylog.error('会员卡订单可以重复支付')
@@ -98,6 +100,7 @@ class CheckClubOrder(unittest.TestCase):
                             mylog.info('美丽金余额不足！')
                     except Exception as e:
                         mylog.error('会员卡支付失败',e,r.json())
+                        raise ValueError(e)
 
 if __name__ == '__main__':
     unittest.main()

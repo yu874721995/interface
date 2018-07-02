@@ -46,6 +46,7 @@ class Test_HomePage(unittest.TestCase):
             mylog.info('首页获取成功')
         except Exception as e:
             mylog.error('首页获取失败',e,r.json())
+            raise ValueError(e)
 
     def tsts_C_login(cls):
         '''验证C端登录'''
@@ -74,6 +75,7 @@ class Test_HomePage(unittest.TestCase):
             cls.token = 'Bearer' + r.json()['token']
         except Exception as e:
             mylog.error('C端登录失败！',e,r.json())
+            raise ValueError(e)
         return cls.token
 
 if __name__ == '__main__':

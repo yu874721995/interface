@@ -31,16 +31,19 @@ class Detail(unittest.TestCase):
         r = requests.post(self.detailUrl,data=data,headers=headers)
         failDetail = []
         for i in r.json()['data']:
-            # print (i)
             for e in i['subRoleFucList']:
                 if e['pid'] != i['functionId']:
                     failDetail.append(e['funcName'])
                 for s in e['subRoleFucList']:
                     if s['pid'] != e['functionId']:
                         failDetail.append(s['funcName'])
-        assert r.json()['msg'] == '操作成功'
-        mylog.info('权限读取成功')
-        assert failDetail.__len__() < 1
+        try:
+            assert r.json()['msg'] == '操作成功'
+            mylog.info('权限读取成功')
+            assert failDetail.__len__() < 1
+        except Exception as e:
+            mylog.error('权限获取失败',e)
+            raise ValueError(e)
 
 if __name__ == '__main__':
     unittest.main()
