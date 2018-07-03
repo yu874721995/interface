@@ -20,7 +20,8 @@ class CheckClubOrder(unittest.TestCase):
         global order_id
         get_login =Get_Login()
         if get_login.get_test_token() == 1:
-            return False
+            mylog.error('--------------获取token失败--------------')
+            raise ValueError()
         cls.C_token = get_login.get_C_token()
         cls.Orderurl = GetApi('C_host', 'clubOrder').main()
         cls.ZJCpayurl = GetApi('C_host', 'mljpayclub').main()

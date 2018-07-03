@@ -18,7 +18,7 @@ class Get_Login():
     def get_mp_login_interface(self):
         '''获取平台端token'''
         config = configparser.ConfigParser()
-        path = 'D:\PyCharm2017.3.2\pyfolder\InterFace\config\config.ini'
+        path = os.path.dirname(os.path.abspath('.'))+'\config\config.ini'
         config.read(path,encoding="utf-8-sig")
         mp_login_url = GetApi('mp_host','mp_login').main()
         mp_pic_url = GetApi('mp_host','picture_list').main()
@@ -27,7 +27,7 @@ class Get_Login():
     def get_test_login_interface(self):
         '''获取商家端token'''
         config = configparser.ConfigParser()
-        path = 'D:\PyCharm2017.3.2\pyfolder\InterFace\config\config.ini'
+        path = os.path.dirname(os.path.abspath('.'))+'\config\config.ini'
         config.read(path,encoding="utf-8-sig")
         mp_login_url = GetApi('test_host','test_login').main()
         return mp_login_url

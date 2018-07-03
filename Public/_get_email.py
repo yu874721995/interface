@@ -25,7 +25,7 @@ class GetEmail(object):
 
     def find_newfile(self):
         #文件位置
-        file_path = 'D:\PyCharm2017.3.2\pyfolder\InterFace\Test_report'
+        file_path = os.path.dirname(os.path.abspath('.'))+'/Test_report'
         #获取当前目录文件列表
         file_name = os.listdir(file_path)
         #获取当前目录下最新文件

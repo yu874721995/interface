@@ -14,7 +14,7 @@ class GetApi():
         self.balue = value
 
         config = configparser.ConfigParser()
-        config_path = 'D:/PyCharm2017.3.2/pyfolder/InterFace/config/config.ini'
+        config_path = os.path.dirname(os.path.abspath('.'))+'/config/config.ini'
         config.read(config_path,encoding="utf-8-sig")
         self.host = config.get('Host',service)
         self.api = config.get('Api',value)

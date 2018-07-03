@@ -4,7 +4,6 @@
 # @Author  : Carewn
 # @Software: PyCharm
 
-
 import requests
 import unittest
 from Public.logger import Logger
@@ -27,6 +26,7 @@ class Test_project(unittest.TestCase):
         pass
 
     def test_projectHostList(cls):
+        '''获取热门项目列表'''
         data = {
             "beautType": "",
             "cMerchantId": "81136",
@@ -36,7 +36,7 @@ class Test_project(unittest.TestCase):
             "login_merchant_id": "81136",
             "login_token": cls.token,
             "maxPrice": "",
-            "merchantId": "",
+            "merchantId": "81136",
             "minPrice": "0",
             "pageIndex": "1",
             "requestType": "1",
@@ -58,6 +58,7 @@ class Test_project(unittest.TestCase):
             raise ValueError(e)
 
     def test_projectDetail(cls):
+        '''获取项目详情页'''
         data = {
             "cMerchantId": "81136",
             "customerId": "195946",
