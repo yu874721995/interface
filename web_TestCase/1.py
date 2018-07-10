@@ -67,8 +67,13 @@
 #     "login_merchant_id": 81136
 # }
 # r = requests.post(url,data=date)
-# print (r.text)
-from random import randint
-s = ['aaaa','ssss']
-a = s[randint(0,1)]
-print (a)
+# # print (r.text)
+# from random import randint
+# s = ['aaaa','ssss']
+# a = s[randint(0,1)]
+# print (a)
+
+from Public.Oracle import fetchOracle
+db = fetchOracle()
+sql = "delete from tn_cash_pool_trade where RECHARGE_RECORD_ID = :ORDER_ID"
+delete from tn_cash_pool_recharge where customer_id = :

@@ -28,7 +28,7 @@ class CheckClubAdd(unittest.TestCase):
             mylog.info(u'token生成正确......')
         else:
             print ('error',Exception)
-        cls.clubcardadd = GetApi('ClubCardAdd','test_host').main()
+        cls.clubcardadd = GetApi('test_host','ClubCardAdd').main()
         mylog.info(u'接口路径%s', cls.clubcardadd)
         global db
         db = fetchOracle()

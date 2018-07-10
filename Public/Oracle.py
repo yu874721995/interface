@@ -28,8 +28,8 @@ class fetchOracle():
         else:
             cursor.execute(SQL,values)
             result = cursor.fetchall()
-        cursor.close()
-        self.connection.close()
+        # cursor.close()
+        # self.connection.close()
         #获取全部结果/获取单个结果 fetchone
         print (cursor.rowcount)
         #提交执行
@@ -46,8 +46,8 @@ class fetchOracle():
         else:
             cursor.execute(SQL,values)
             result = cursor.fetchone()
-        cursor.close()
-        self.connection.close()
+        # cursor.close()
+        # self.connection.close()
         print (cursor.rowcount)
         # 提交执行
         #self.connection.commit()
@@ -63,11 +63,13 @@ class fetchOracle():
         else:
             cursor.execute(SQL,Values)
             self.connection.commit()
-        cursor.close()
-        self.connection.close()
+        # cursor.close()
+        # self.connection.close()
         # 获取全部结果/获取单个结果 fetchone
         # result = cursor.fetchall()
         # 提交执行
+    def close(self):
+         self.connection.close()
 
     #统计结果数量
     #count = cursor.rowcount

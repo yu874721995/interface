@@ -13,6 +13,7 @@ from Public.get_api import GetApi
 
 mylog = Logger(logger="Getlogin").getlog()
 
+
 class Get_Login():
 
     def get_mp_login_interface(self):
