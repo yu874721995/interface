@@ -18,6 +18,8 @@ class Logger():
         #定义日志的名字和路径
         log_time = time.strftime('%y%m%d%H%M',time.localtime(time.time()))
         log_path = os.path.dirname(os.path.abspath('.')) + '/logs/'
+        if log_path == r'D:\PyCharm2017.3.2\pyfolder/logs/':
+            log_path = os.path.abspath('.')+'/logs/'
         log_name = log_path+str(log_time)+'.log'
 
         #创建一个Handler 输出到日志文件

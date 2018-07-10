@@ -19,7 +19,7 @@ class mp_ourmclist():
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
-            return
+            raise ValueError(e)
 
         self.mini_url = GetApi('mp_host', 'mp_mini_list').main()
         self.Code_url = GetApi('mp_host','mp_Code').main()

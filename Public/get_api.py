@@ -15,6 +15,8 @@ class GetApi():
 
         config = configparser.ConfigParser()
         config_path = os.path.dirname(os.path.abspath('.'))+'/config/config.ini'
+        if config_path == 'D:\PyCharm2017.3.2\pyfolder/config/config.ini':
+            config_path = os.path.abspath('.') + '/config/config.ini'
         config.read(config_path,encoding="utf-8-sig")
         self.host = config.get('Host',host)
         self.api = config.get('Api',api)
@@ -23,7 +25,7 @@ class GetApi():
         return self.host+self.api
 
 if __name__ == '__main__':
-    x = GetApi('Host','test_host')
-    x.main()
+    x = GetApi('test_host','C_homePage')
+    print (x.main())
 
 

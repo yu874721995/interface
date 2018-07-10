@@ -133,3 +133,6 @@
 #         return gatheringRate
 # if gatheringRate != '':
 #     print (gatheringRate)
+
+import os.path
+print (os.path.abspath('.'))
