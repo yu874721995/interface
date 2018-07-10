@@ -117,4 +117,5 @@ class mp_ourmclist():
 
 if __name__ == '__main__':
     f = mp_ourmclist()
+    f.commitCode()
     f.cateAndcommit()
