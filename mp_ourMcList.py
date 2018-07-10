@@ -106,14 +106,22 @@ class mp_ourmclist():
                 data['title'] = '首页'
         for i in self.get_request:
             try:
-                r = requests.post(self.commitSh,data={'appid':i[0],'itemList':[data]})
+                headers = {
+                    'Authorization':self.token
+                }
+                datas = {
+                    'appid':i[0],
+                    'itemList':[data]
+                }
+                r = requests.post(self.commitSh,json=datas,headers=headers)
                 if r.json()['msg'] == '操作成功':
                     mylog.info('{}提交成功'.format(i[1]))
                 else:
-                    mylog.error('{}提交失败'.format(i[1]))
+                    mylog.error('{}提交失败'.format(i[1]),r.json()['msg'])
                     time.sleep(2)
             except Exception as e:
-                mylog.error('-------------------到{}报错啦报错啦!!!!!!!!!!!!------------------'.format(i[1]))
+                mylog.error('----到{}报错啦报错啦!!!!!!!!!!!!----'.format(i[1]),r.json()['msg'])
+                raise ValueError(e)
 
 if __name__ == '__main__':
     f = mp_ourmclist()
