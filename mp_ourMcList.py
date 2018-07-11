@@ -51,10 +51,14 @@ class mp_ourmclist():
 
     #根据小程序的appid获取所有模板,并取最新的一个
     def get_code(self):
+        r = ''
         data = {
             'appid':self.get_request[0][0]
         }
-        r = requests.post(self.Code_url,data)
+        try:
+            r = requests.post(self.Code_url,data)
+        except Exception as e:
+            mylog.error('获取模板失败')
         template_id = ''
         user_version = ''
         user_desc = ''
@@ -71,6 +75,7 @@ class mp_ourmclist():
     def commitCode(self):
         data = {}
         for i in self.get_request:
+            r = ''
             if i[2] == 1:
                 i[2] = True
             else:
@@ -84,7 +89,11 @@ class mp_ourmclist():
                 'userDesc':self.code[2],
                 'userVersion':self.code[1]
             }
-            r = requests.post(self.commit_url,json=data)
+            try:
+                r = requests.post(self.commit_url,json=data)
+            except Exception as e:
+                mylog.error('{}模板设置失败'.format(data['merchant_name']))
+                break
             if r.json()['msg'] == '操作成功':
                 mylog.info('-----------------{}模板操作成功------------------'.format(data['merchant_name']))
             else:
@@ -117,11 +126,12 @@ class mp_ourmclist():
                 if r.json()['msg'] == '操作成功':
                     mylog.info('{}提交成功'.format(i[1]))
                 else:
-                    mylog.error('{}提交失败'.format(i[1]),r.json()['msg'])
+                    mylog.error('{}提交失败'.format(i[1]))
                     time.sleep(2)
+                    continue
             except Exception as e:
-                mylog.error('----到{}报错啦报错啦!!!!!!!!!!!!----'.format(i[1]),r.json()['msg'])
-                raise ValueError(e)
+                mylog.error('----到{}报错啦报错啦!!!!!!!!!!!!----'.format(i[1]))
+                continue
 
 if __name__ == '__main__':
     f = mp_ourmclist()
