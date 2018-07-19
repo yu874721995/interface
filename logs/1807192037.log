@@ -1,0 +1,9 @@
+2018-07-19 20:37:13,357-mp_log-INFO-token获取成功......
+2018-07-19 20:37:15,202-mp_log-INFO-获取所有小程序信息成功......
+2018-07-19 20:37:15,646-mp_log-INFO-获取最新模板信息成功.......
+2018-07-19 20:37:16,398-mp_log-ERROR-GOGOBeauty(管理中心)操作失败,失败原因{'status': 'error', 'msg': 'api is unauthorized to component hint: [XssRAa0843b100]'}
+2018-07-19 20:37:16,756-mp_log-INFO-海岸城店模板操作成功,模板名称mb_test
+2018-07-19 20:37:16,931-mp_log-INFO-体验账号模板操作成功,模板名称mb_test
+2018-07-19 20:37:18,403-mp_log-ERROR-GOGOBeauty(管理中心)提交失败
+2018-07-19 20:37:18,512-mp_log-ERROR-体验账号提交失败
+2018-07-19 20:37:18,603-mp_log-ERROR-海岸城店提交失败

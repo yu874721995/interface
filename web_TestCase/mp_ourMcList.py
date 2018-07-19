@@ -123,7 +123,7 @@ class mp_ourmclist():
                 mylog.error('{}提交失败'.format(i[1]))
         except Exception as e:
             mylog.error('----到{}报错啦报错啦!!!!!!!!!!!!----'.format(i[1]))
-
+    #多个线程进行模板设置
     def commit(self):
         ourThread = []
         for i in self.get_request:
@@ -137,6 +137,7 @@ class mp_ourmclist():
         for i in ourThread:
             i.join()
 
+    #启动多个线程进行提交
     def commitour(self):
         ourThread = []
         data = {}
@@ -166,8 +167,9 @@ class mp_ourmclist():
 
 
 if __name__ == "__main__":
-    x = mp_ourmclist().commit()
-    y = mp_ourmclist().commitour()
+    x = mp_ourmclist()
+    x.commit()
+    x.commitour()
 
 
 
