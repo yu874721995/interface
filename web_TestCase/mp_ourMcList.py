@@ -58,7 +58,6 @@ class mp_ourmclist():
         mylog.info('获取所有小程序信息成功......')
         return our_app
 
-
     #根据小程序的appid获取所有模板,并取最新的一个
     def get_code(self):
         r = ''
