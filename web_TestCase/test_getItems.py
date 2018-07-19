@@ -22,7 +22,7 @@ class get_Items(unittest.TestCase):
     def setUpClass(cls):
         token = Get_Login()
         cls.token = token.get_test_token()
-        cls.Itemsurl = GetApi('Host','test_host').xx()+GetApi('Api','get_Items').xx()
+        cls.Itemsurl = GetApi('test_host','get_Items','config.ini').main()
 
     @classmethod
     def tearDownClass(cls):

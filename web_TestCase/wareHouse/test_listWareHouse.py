@@ -10,26 +10,25 @@ from Public.Get_login_token import Get_Login
 from Public.logger import Logger
 from Public.get_api import GetApi
 
+mylog = Logger(logger='webTest_log').getlog()
 class test_listwarehouse(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.token = Get_Login().get_test_token()
-        cls.listWareHouse_url = GetApi('web_host','listWareHouse').main()
+        cls.listWareHouse_url = GetApi('wareHouse','addwareHouse').main()
 
     @classmethod
     def tearDownClass(cls):
         pass
 
     def test_ListWareHouse(cls):
-        print (cls.listWareHouse_url)
         data = {
-            'pageIndex':'',
-            'pageSize':'',
-            'no':'',
-            'name':'',
-            'shopId':'',
-            'type':1
+            "no": " WH 20180621001",
+  "name": "",
+  "shopId": 1001,
+  "shopName": "",
+  "label": ""
         }
         headers = {
             'Authorization':cls.token

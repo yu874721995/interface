@@ -19,6 +19,7 @@ class mp_ourmclist():
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
+            print (self.token)
             raise ValueError(e)
 
         self.mini_url = GetApi('mp_host', 'mp_mini_list').main()
@@ -95,9 +96,9 @@ class mp_ourmclist():
                 mylog.error('{}模板设置失败'.format(data['merchant_name']))
                 break
             if r.json()['msg'] == '操作成功':
-                mylog.info('-----------------{}模板操作成功------------------'.format(data['merchant_name']))
+                mylog.info('{}模板操作成功,模板名称{}'.format(data['merchant_name'],data['userDesc']))
             else:
-                mylog.error('!!!!!!{}操作失败!!!!!!'.format(data['merchant_name'],r.json()))
+                mylog.error('{}操作失败,失败原因{}'.format(data['merchant_name'],r.json()))
 
     def cateAndcommit(self):
         data = {}

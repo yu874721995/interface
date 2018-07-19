@@ -23,9 +23,9 @@ class CheckClubOrder(unittest.TestCase):
             mylog.error('--------------获取token失败--------------')
             raise ValueError()
         cls.C_token = get_login.get_C_token()
-        cls.Orderurl = GetApi('C_host', 'clubOrder').main()
-        cls.ZJCpayurl = GetApi('C_host', 'mljpayclub').main()
-        cls.xjPayUrl = GetApi('test_host', 'xjPayClub').main()
+        cls.Orderurl = GetApi('C_host', 'clubOrder','config.ini').main()
+        cls.ZJCpayurl = GetApi('C_host', 'mljpayclub','config.ini').main()
+        cls.xjPayUrl = GetApi('test_host', 'xjPayClub','config.ini').main()
         cls.web_token = get_login.get_test_token()
 
     @classmethod
