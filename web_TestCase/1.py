@@ -73,7 +73,31 @@
 # a = s[randint(0,1)]
 # print (a)
 
-from Public.Oracle import fetchOracle
-db = fetchOracle()
-sql = "delete from tn_cash_pool_trade where RECHARGE_RECORD_ID = :ORDER_ID"
-delete from tn_cash_pool_recharge where customer_id = :
+# from Public.Oracle import fetchOracle
+# db = fetchOracle()
+# sql = "delete from tn_cash_pool_trade where RECHARGE_RECORD_ID = :ORDER_ID"
+# delete from tn_cash_pool_recharge where customer_id = :
+# import threading
+# import random
+# from random import randint
+# #a = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+# def fun1():
+#     a = randint(100,1201201201)
+#     print (a)
+#
+# ss = []
+# for i in range(0,200):
+#     aa = threading.Thread(target=fun1)
+#     aa.setDaemon(True)
+#     ss.append(aa)
+#
+# for p in ss:
+#     p.start()
+#
+# for l in ss:
+#     l.join()
+import requests
+
+r =requests.post(url='http://mp.ydm01.cn/api/wx/getCategory',data={'appid':'wx88164ec2c9581663'})
+print (r.json())
+

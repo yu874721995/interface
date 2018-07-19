@@ -16,12 +16,19 @@ mylog = Logger(logger="Getlogin").getlog()
 
 class Get_Login():
 
+    def __init__(self):
+        self.host = 'CS'
+
     def get_mp_login_interface(self):
         '''获取平台端token'''
-        config = configparser.ConfigParser()
-        path = os.path.dirname(os.path.abspath('.'))+'\config\config.ini'
-        config.read(path,encoding="utf-8-sig")
-        mp_login_url = GetApi('mp_host','mp_login','config.ini').main()
+        # config = configparser.ConfigParser()
+        # path = os.path.dirname(os.path.abspath('.'))+'\config\config.ini'
+        # config.read(path,encoding="utf-8-sig")
+        mp_login_url = ''
+        if self.host == 'CS':
+            mp_login_url = GetApi('mp_test_host','mp_login','config.ini').main()
+        else:
+            mp_login_url = GetApi('mp_host', 'mp_login', 'config.ini').main()
         mp_pic_url = GetApi('mp_host','picture_list','config.ini').main()
         return mp_login_url,mp_pic_url
 
@@ -35,14 +42,20 @@ class Get_Login():
 
     def get_mp_token(self):
         url = self.get_mp_login_interface()[0]
-        data = {
-            "account":"ggbadmin",
-            "pwd":"f5dcc5a7cabbafd8695480c0edb7b35a"
-        }
+        data = {}
+        if self.host == 'CS':
+            data = {
+                "account":"ggbadmin",
+                "pwd":"e10adc3949ba59abbe56e057f20f883e"
+            }
+        else:
+            data = {
+                "account": "ggbadmin",
+                "pwd": "f5dcc5a7cabbafd8695480c0edb7b35a"
+            }
         r = requests.post(url,data=data)
         token = r.json()['token']
         token = "Bearer "+token
-        print (r.json())
         return token
 
     def get_test_token(self):
@@ -99,5 +112,5 @@ class Get_Login():
 
 if __name__  == '__main__':
     s = Get_Login()
-    s.get_test_token()
-    s.get_picurl()
+    s.get_mp_token()
+    #s.get_picurl()
