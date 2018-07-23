@@ -23,19 +23,21 @@ class mp_ourmclist():
             print (self.token)
             raise ValueError(e)
 
-        self.HJ = 'CS'
+        self.HJ = 'ZS'
         if self.HJ == 'CS':
             self.mini_url = GetApi('mp_test_host', 'mp_mini_list','config.ini').main()
             self.Code_url = GetApi('mp_test_host','mp_Code','config.ini').main()
             self.commit_url = GetApi('mp_test_host','mp_commit_code','config.ini').main()
             self.cate_url = GetApi('mp_test_host','mp_wx_cate','config.ini').main()
             self.commitSh = GetApi('mp_test_host','mp_commitSh','config.ini').main()
+            self.commitshenhe = GetApi('mp_test_host','commitshenhe','config.ini').main()
         else:
             self.mini_url = GetApi('mp_host', 'mp_mini_list', 'config.ini').main()
             self.Code_url = GetApi('mp_host', 'mp_Code', 'config.ini').main()
             self.commit_url = GetApi('mp_host', 'mp_commit_code', 'config.ini').main()
             self.cate_url = GetApi('mp_host', 'mp_wx_cate', 'config.ini').main()
             self.commitSh = GetApi('mp_host', 'mp_commitSh', 'config.ini').main()
+            self.commitshenhe = GetApi('mp_host', 'commitshenhe', 'config.ini').main()
 
         self.get_request = self.get_request()
         self.code = self.get_code()
@@ -43,8 +45,8 @@ class mp_ourmclist():
     def get_request(self):
         data = {
             'pageNumber':1,
-            'pageSize':100,
-            'status':2
+            'pageSize':200
+            #'auditstatus':4
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -81,7 +83,7 @@ class mp_ourmclist():
         return template_id,user_version,user_desc
 
     #提交模板
-    def commitCode(self,i):
+    def commitCode(self,i,x,y):
         data = {}
         r = ''
         if i[2] == 1:
@@ -126,7 +128,7 @@ class mp_ourmclist():
     def commit(self):
         ourThread = []
         for i in self.get_request:
-            a = threading.Thread(target=self.commitCode,args=(i,))
+            a = threading.Thread(target=self.commitCode,args=(i,x,y,))
             a.setDaemon(True)
             ourThread.append(a)
 
@@ -165,10 +167,49 @@ class mp_ourmclist():
             i.join()
 
 
+    def commitsh(self,i):
+        try:
+            data = {
+                'appid':i[0]
+            }
+            r = requests.post(self.commitshenhe,data=data)
+            if r.json()['data']['status'] == 1:
+                mylog.info('审核失败')
+            elif r.json()['data']['status'] == 2:
+                mylog.info('审核中')
+            elif r.json()['data']['status'] == 0:
+                mylog.info('已审核')
+            else:
+                mylog.info('没提交审核')
+        except Exception as e:
+            raise ValueError(e)
+        #print (r.json()['data'])
+
+
+    def commitSH(self):
+        #print (self.get_request)
+        our = []
+        for i in self.get_request:
+            a = threading.Thread(target=self.commitsh,args=(i,))
+            a.setDaemon(True)
+            our.append(a)
+
+        for i in our:
+            i.start()
+
+        for i in our:
+            i.join()
+
+
+
+
+
 if __name__ == "__main__":
     x = mp_ourmclist()
-    x.commit()
-    x.commitour()
+    #x.commit()#设置模板
+    #x.commitsh()#提交审核
+    #x.commitour()#
+    x.commitSH()#查询所有小程序审核状态
 
 
 

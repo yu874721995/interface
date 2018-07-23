@@ -96,8 +96,7 @@
 #
 # for l in ss:
 #     l.join()
-import requests
-
-r =requests.post(url='http://mp.ydm01.cn/api/wx/getCategory',data={'appid':'wx88164ec2c9581663'})
-print (r.json())
-
+# import requests
+#
+# r =requests.post(url='http://mp.ydm01.cn/api/wx/getCategory',data={'appid':'wx88164ec2c9581663'})
+# print (r.json())
