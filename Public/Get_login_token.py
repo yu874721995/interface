@@ -16,8 +16,8 @@ mylog = Logger(logger="Getlogin").getlog()
 
 class Get_Login():
 
-    def __init__(self):
-        self.host = 'ZS'
+    def __init__(self,host):
+        self.host = host
 
     def get_mp_login_interface(self):
         '''获取平台端token'''

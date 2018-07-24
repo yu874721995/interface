@@ -14,16 +14,16 @@ import threading
 mylog = Logger(logger='mp_log').getlog()
 class mp_ourmclist():
 
-    def __init__(self):
+    def __init__(self,HJ):
         try:
-            self.token = Get_Login().get_mp_token()
+            self.token = Get_Login('ZS').get_mp_token()
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
             print (self.token)
             raise ValueError(e)
 
-        self.HJ = 'ZS'
+        self.HJ = HJ
         if self.HJ == 'CS':
             self.mini_url = GetApi('mp_test_host', 'mp_mini_list','config.ini').main()
             self.Code_url = GetApi('mp_test_host','mp_Code','config.ini').main()
@@ -46,7 +46,7 @@ class mp_ourmclist():
         data = {
             'pageNumber':1,
             'pageSize':200
-            #'auditstatus':4
+            #'auditstatus':0
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -83,7 +83,7 @@ class mp_ourmclist():
         return template_id,user_version,user_desc
 
     #提交模板
-    def commitCode(self,i,x,y):
+    def commitCode(self,i):
         data = {}
         r = ''
         if i[2] == 1:
@@ -128,11 +128,12 @@ class mp_ourmclist():
     def commit(self):
         ourThread = []
         for i in self.get_request:
-            a = threading.Thread(target=self.commitCode,args=(i,x,y,))
+            a = threading.Thread(target=self.commitCode,args=(i,))
             a.setDaemon(True)
             ourThread.append(a)
 
         for i in ourThread:
+            time.sleep(2)
             i.start()
 
         for i in ourThread:
@@ -161,6 +162,7 @@ class mp_ourmclist():
             ourThread.append(a)
 
         for i in ourThread:
+            time.sleep(2)
             i.start()
 
         for i in ourThread:
@@ -173,14 +175,23 @@ class mp_ourmclist():
                 'appid':i[0]
             }
             r = requests.post(self.commitshenhe,data=data)
+            res = r.json()
             if r.json()['data']['status'] == 1:
                 mylog.info('审核失败')
+                # with open('error.txt','a') as f:
+                #     f.write(i[1])
+                #     f.write(res['data']['reason'])
+                #     print ('写入成功')
+
             elif r.json()['data']['status'] == 2:
                 mylog.info('审核中')
             elif r.json()['data']['status'] == 0:
                 mylog.info('已审核')
             else:
                 mylog.info('没提交审核')
+            # for i in self.get_request:
+            #     if res[]
+
         except Exception as e:
             raise ValueError(e)
         #print (r.json()['data'])
@@ -195,6 +206,7 @@ class mp_ourmclist():
             our.append(a)
 
         for i in our:
+            time.sleep(1)
             i.start()
 
         for i in our:
@@ -205,10 +217,10 @@ class mp_ourmclist():
 
 
 if __name__ == "__main__":
-    x = mp_ourmclist()
+    x = mp_ourmclist('ZS')
     #x.commit()#设置模板
-    #x.commitsh()#提交审核
-    #x.commitour()#
+    # x.commitsh()#
+    # x.commitour()#提交审核
     x.commitSH()#查询所有小程序审核状态
 
 
