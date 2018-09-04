@@ -2,14 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import xlrd
-import os
 from Public.findFile import findFile
 
 class get_excel(findFile):
 
     def __init__(self,file_path,sheet_name):
-        if sheet_name is int:
-            sheet_name -= 1
         self.file_path = findFile(file_path).find_file()
         self.sheet_name = sheet_name
         self.file = xlrd.open_workbook(self.file_path)
@@ -62,7 +59,7 @@ class get_excel(findFile):
             return self.sheet.cell_xf_index(col, start_rowx=0, end_rowx=None)
 
 if __name__ == '__main__':
-    la = get_excel('order.xlsx',1).get_oneColum(1,'values')
+    la = get_excel('orderNo.xlsx','Sheet1').get_oneColum(1,'values')
     print (la)
 
 

@@ -3,6 +3,6 @@
 # @Time    : 18:17
 # @Author  : Carewn
 # @Software: PyCharm
-
-import os
-print (os.path.dirname('.'))
+from datetime import datetime
+dat = datetime
+print (dat)

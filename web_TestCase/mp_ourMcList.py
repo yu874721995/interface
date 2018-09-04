@@ -16,11 +16,10 @@ class mp_ourmclist():
 
     def __init__(self,HJ):
         try:
-            self.token = Get_Login('ZS').get_mp_token()
+            self.token = Get_Login(HJ).get_mp_token()
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
-            print (self.token)
             raise ValueError(e)
 
         self.HJ = HJ
@@ -31,6 +30,7 @@ class mp_ourmclist():
             self.cate_url = GetApi('mp_test_host','mp_wx_cate','config.ini').main()
             self.commitSh = GetApi('mp_test_host','mp_commitSh','config.ini').main()
             self.commitshenhe = GetApi('mp_test_host','commitshenhe','config.ini').main()
+            self.release = GetApi('mp_test_host','release','config.ini').main()
         else:
             self.mini_url = GetApi('mp_host', 'mp_mini_list', 'config.ini').main()
             self.Code_url = GetApi('mp_host', 'mp_Code', 'config.ini').main()
@@ -38,6 +38,7 @@ class mp_ourmclist():
             self.cate_url = GetApi('mp_host', 'mp_wx_cate', 'config.ini').main()
             self.commitSh = GetApi('mp_host', 'mp_commitSh', 'config.ini').main()
             self.commitshenhe = GetApi('mp_host', 'commitshenhe', 'config.ini').main()
+            self.release = GetApi('mp_host', 'release', 'config.ini').main()
 
         self.get_request = self.get_request()
         self.code = self.get_code()
@@ -46,7 +47,7 @@ class mp_ourmclist():
         data = {
             'pageNumber':1,
             'pageSize':200
-            #'auditstatus':0
+            #'auditstatus':0 #已审核
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -133,7 +134,7 @@ class mp_ourmclist():
             ourThread.append(a)
 
         for i in ourThread:
-            time.sleep(2)
+            time.sleep(1)
             i.start()
 
         for i in ourThread:
@@ -143,7 +144,7 @@ class mp_ourmclist():
     def commitour(self):
         ourThread = []
         data = {}
-        r = requests.post(self.cate_url, data={'appid': self.get_request[1][0]})
+        r = requests.post(self.cate_url, data={'appid': self.get_request[0][0]})
         cate = r.json()['category_list']
         for i in cate:
             if i['third_class'] == '美容':
@@ -162,7 +163,7 @@ class mp_ourmclist():
             ourThread.append(a)
 
         for i in ourThread:
-            time.sleep(2)
+            time.sleep(0.5)
             i.start()
 
         for i in ourThread:
@@ -178,10 +179,10 @@ class mp_ourmclist():
             res = r.json()
             if r.json()['data']['status'] == 1:
                 mylog.info('审核失败')
-                # with open('error.txt','a') as f:
-                #     f.write(i[1])
-                #     f.write(res['data']['reason'])
-                #     print ('写入成功')
+                with open('error.txt','a') as f:
+                    f.write(i[1])
+                    f.write(res['data']['reason'] + '\n')
+                    print ('写入成功')
 
             elif r.json()['data']['status'] == 2:
                 mylog.info('审核中')
@@ -206,22 +207,58 @@ class mp_ourmclist():
             our.append(a)
 
         for i in our:
-            time.sleep(1)
+            time.sleep(0.3)
             i.start()
 
         for i in our:
             i.join()
 
+    def releasecode(self,i,ourname):
+            try:
+                time.sleep(1)
+                data = {
+                    'appid':i[0]
+                }
+                headers = {
+                    'Authorization':self.token
+                }
+                r = requests.post(self.release,data=data,headers=headers)
+                res = r.json()
+                if res['msg'] == '操作成功':
+                    print ('{}提交成功'.format(i[1]))
+                    ourname.append(i[1])
+                else:
+                    print ('{}提交失败或已提交:{}'.format(i[1],res))
+            except Exception as e:
+                print('{}提交失败或已提交'.format(i[1]))
+
+    def releasecodeTh(self):
+        ourname = []
+        our = []
+        for i in self.get_request:
+            a = threading.Thread(target=self.releasecode,args=(i,ourname,))
+            a.setDaemon(True)
+            our.append(a)
+
+        for i in our:
+            time.sleep(0.8)
+            i.start()
+
+        for i in our:
+            i.join()
+
+        print (ourname)
 
 
 
 
 if __name__ == "__main__":
-    x = mp_ourmclist('ZS')
+    x = mp_ourmclist('CS')
     #x.commit()#设置模板
     # x.commitsh()#
-    # x.commitour()#提交审核
+    #x.commitour()#提交审核
     x.commitSH()#查询所有小程序审核状态
+    #x.releasecodeTh()#提交
 
 
 

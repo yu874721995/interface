@@ -37,7 +37,10 @@ class Get_Login():
         config = configparser.ConfigParser()
         path = os.path.dirname(os.path.abspath('.'))+'\config\config.ini'
         config.read(path,encoding="utf-8-sig")
-        mp_login_url = GetApi('test_host','test_login','config.ini').main()
+        if self.host == 'CS':
+            mp_login_url = GetApi('test_host','test_login','config.ini').main()
+        else:
+            mp_login_url = GetApi('web_host', 'test_login', 'config.ini').main()
         return mp_login_url
 
     def get_mp_token(self):
@@ -60,10 +63,16 @@ class Get_Login():
 
     def get_test_token(self):
         url = self.get_test_login_interface()
-        data = {
-            "account": "18664309864",
-            "pwd": "ac140f9e701766ea44ded4aac0fbee6a"
-        }
+        if self.host == 'CS':
+            data = {
+                "account": "13530852030",
+                "pwd": "e10adc3949ba59abbe56e057f20f883e"
+            }
+        else:
+            data = {
+                "account": "18664309864",
+                "pwd": "ac140f9e701766ea44ded4aac0fbee6a"
+            }
         r = requests.post(url, data=data)
         token = r.json()['token']
         token = "Bearer " + token

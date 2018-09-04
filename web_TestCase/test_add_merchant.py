@@ -19,15 +19,16 @@ mylog = Logger(logger='ADDmerchant').getlog()
 class Test_addMerchant(unittest.TestCase):
 
     def setUp(self):
-        login = Get_Login()
-        token = login.get_test_token()
+        login = Get_Login('CS')
+        self.token = login.get_test_token()
         
 
 
 
     def tearDown(self):
-        pass
-
+        data = {}
+        r =requests.post('https://saas.ydm01.com/api/team/ManagerStoreBranch',data=data,headers={'Authorization':self.token})
+        print (r.json())
     def testAddMerchant(self):
         pass
 
