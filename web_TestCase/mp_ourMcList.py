@@ -14,16 +14,16 @@ import threading
 mylog = Logger(logger='mp_log').getlog()
 class mp_ourmclist():
 
-    def __init__(self,HJ):
+    def __init__(self,workEnvironment):
+        self.workEnvironment = workEnvironment
         try:
-            self.token = Get_Login(HJ).get_mp_token()
+            self.token = Get_Login(workEnvironment=False).get_mp_login_interface()
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
             raise ValueError(e)
 
-        self.HJ = HJ
-        if self.HJ == 'CS':
+        if self.workEnvironment == False:
             self.mini_url = GetApi('mp_test_host', 'mp_mini_list','config.ini').main()
             self.Code_url = GetApi('mp_test_host','mp_Code','config.ini').main()
             self.commit_url = GetApi('mp_test_host','mp_commit_code','config.ini').main()
@@ -46,8 +46,8 @@ class mp_ourmclist():
     def get_request(self):
         data = {
             'pageNumber':1,
-            'pageSize':200
-            #'auditstatus':0 #已审核
+            'pageSize':200,
+            'auditstatus':4 #已审核
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -158,9 +158,10 @@ class mp_ourmclist():
                 data['title'] = '首页'
                 continue
         for i in self.get_request:
-            a = threading.Thread(target=self.cateAndcommit,args=(i,data))
-            a.setDaemon(True)
-            ourThread.append(a)
+            if i[3] != 81136:
+                a = threading.Thread(target=self.cateAndcommit,args=(i,data))
+                a.setDaemon(True)
+                ourThread.append(a)
 
         for i in ourThread:
             time.sleep(0.5)
@@ -202,6 +203,7 @@ class mp_ourmclist():
         #print (self.get_request)
         our = []
         for i in self.get_request:
+            print (i)
             a = threading.Thread(target=self.commitsh,args=(i,))
             a.setDaemon(True)
             our.append(a)
@@ -253,11 +255,12 @@ class mp_ourmclist():
 
 
 if __name__ == "__main__":
-    x = mp_ourmclist('CS')
+    x = mp_ourmclist(workEnvironment=True)
+    #x.get_request()#查看列表
     #x.commit()#设置模板
     # x.commitsh()#
-    #x.commitour()#提交审核
-    x.commitSH()#查询所有小程序审核状态
+    x.commitour()#提交审核
+    #x.commitSH()#查询所有小程序审核状态
     #x.releasecodeTh()#提交
 
 

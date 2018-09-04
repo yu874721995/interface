@@ -21,9 +21,6 @@ class Test_addMerchant(unittest.TestCase):
     def setUp(self):
         login = Get_Login('CS')
         self.token = login.get_test_token()
-        
-
-
 
     def tearDown(self):
         data = {}

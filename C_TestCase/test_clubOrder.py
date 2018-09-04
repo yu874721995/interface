@@ -3,6 +3,7 @@
 # @Time    : 10:42
 # @Author  : Carewn
 # @Software: PyCharm
+'''生成充值卡订单'''
 
 from Public.get_api import GetApi
 from Public.logger import Logger
@@ -19,14 +20,11 @@ class CheckClubOrder(unittest.TestCase):
     def setUpClass(cls):
         global order_id
         get_login =Get_Login()
-        if get_login.get_test_token() == 1:
-            mylog.error('--------------获取token失败--------------')
-            raise ValueError()
         cls.C_token = get_login.get_C_token()
-        cls.Orderurl = GetApi('C_host', 'clubOrder','config.ini').main()
-        cls.ZJCpayurl = GetApi('C_host', 'mljpayclub','config.ini').main()
+        cls.Orderurl = GetApi('C_test_host', 'clubOrder','config.ini').main()
+        cls.ZJCpayurl = GetApi('C_test_host', 'mljpayclub','config.ini').main()
         cls.xjPayUrl = GetApi('test_host', 'xjPayClub','config.ini').main()
-        cls.web_token = get_login.get_test_token()
+        cls.web_token = get_login.get_test_login_interface()
 
     @classmethod
     def tearDownClass(cls):

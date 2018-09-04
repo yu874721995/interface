@@ -12,7 +12,7 @@ class GetApi():
 
     def __init__(self,host=None,api=None,filename=None):
         if host is None or api is None or filename is None:
-            return
+            raise ValueError('Please pass in the correct parameters.')
         SYS = sys.argv[0]
         self.service = host
         self.balue = api

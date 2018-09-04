@@ -9,6 +9,7 @@ import unittest
 from Public.logger import Logger
 from C_TestCase.test_homepage import Test_HomePage
 from Public.get_api import GetApi
+from Public.
 
 mylog = Logger(logger='c_log').getlog()
 
@@ -17,7 +18,7 @@ class Test_project(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.homepage = Test_HomePage()
-        cls.token = cls.homepage.tsts_C_login()
+        cls.token = get_login().
         cls.detailUrl = GetApi('C_host','c_detail').main()
         cls.hostList = GetApi('C_host','c_projectHostList').main()
 

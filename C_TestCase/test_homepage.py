@@ -3,6 +3,7 @@
 # @Time    : 16:41
 # @Author  : Carewn
 # @Software: PyCharm
+'''C端首页'''
 
 
 import unittest
@@ -16,8 +17,8 @@ class Test_HomePage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.homePageUrl = GetApi('C_host','C_homePage').main()
-        cls.C_loginUrl = GetApi('C_host','phone_login').main()
+        cls.homePageUrl = GetApi('C_host','C_homePage','config.ini').main()
+        cls.C_loginUrl = GetApi('C_host','phone_login','config.ini').main()
 
     @classmethod
     def tearDownClass(cls):
@@ -47,36 +48,6 @@ class Test_HomePage(unittest.TestCase):
         except Exception as e:
             mylog.error('首页获取失败',e,r.json())
             raise ValueError(e)
-
-    def tsts_C_login(cls):
-        '''验证C端登录'''
-        data = {
-            "MERCHANTID_C":"81136",
-            "channel_code":"81136",
-            "channel_name":"GoGoBeauty",
-            "deviceos":"11.2.6",
-            "devices":"iOS",
-            "imie":"",
-            "login_merchant_id":"81136",
-            "login_token":"",
-            "mac_code":"579A1C6D-984B-4295-A86E-4BB71BCA6CB6",
-            "osversion":"11.2.6",
-            "password":"381ec9fbdfac2be30c73cf23598a8a7a",
-            "telphone":"15818758705",
-            "version":"1.2.22"
-        }
-        headers = {
-
-        }
-        r = requests.post(cls.C_loginUrl, data=data, headers=headers)
-        try:
-            assert r.json()['msg'] == '登录成功'
-            mylog.info('C端登录成功')
-            cls.token = 'Bearer' + r.json()['token']
-        except Exception as e:
-            mylog.error('C端登录失败！',e,r.json())
-            raise ValueError(e)
-        return cls.token
 
 if __name__ == '__main__':
     unittest.main()
