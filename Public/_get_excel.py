@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import xlrd
+import xlwt
 from Public.findFile import findFile
 
 class get_excel(findFile):
@@ -58,9 +59,23 @@ class get_excel(findFile):
         else:
             return self.sheet.cell_xf_index(col, start_rowx=0, end_rowx=None)
 
+
+class writeExcel(findFile):
+
+
+    def x(self):
+        file = xlwt.Workbook(encoding='utf-8')
+        table = file.add_sheet('小程序失败原因汇总表')
+        datatitle = ['序号','小程序名称','失败原因']
+
+
+
+
+
+
 if __name__ == '__main__':
     la = get_excel('orderNo.xlsx','Sheet1').get_oneColum(1,'values')
-    print (la)
+    la = writeExcel('xx.txt').ii()
 
 
 

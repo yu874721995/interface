@@ -46,8 +46,8 @@ class mp_ourmclist():
     def get_request(self):
         data = {
             'pageNumber':1,
-            'pageSize':200,
-            'auditstatus':4 #已审核
+            'pageSize':200
+            #'auditstatus':4 #已审核
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -171,7 +171,7 @@ class mp_ourmclist():
             i.join()
 
 
-    def commitsh(self,i):
+    def commitsh(self,i,ourtitle,o):
         try:
             data = {
                 'appid':i[0]
@@ -180,11 +180,8 @@ class mp_ourmclist():
             res = r.json()
             if r.json()['data']['status'] == 1:
                 mylog.info('审核失败')
-                with open('error.txt','a') as f:
-                    f.write(i[1])
-                    f.write(res['data']['reason'] + '\n')
-                    print ('写入成功')
-
+                s = [o,i[1],r.json()['data']['reason']]
+                ourtitle.append(s)
             elif r.json()['data']['status'] == 2:
                 mylog.info('审核中')
             elif r.json()['data']['status'] == 0:
@@ -201,10 +198,13 @@ class mp_ourmclist():
 
     def commitSH(self):
         #print (self.get_request)
+        o = 0
+        ourtitle = []
         our = []
         for i in self.get_request:
+            o += 1
             print (i)
-            a = threading.Thread(target=self.commitsh,args=(i,))
+            a = threading.Thread(target=self.commitsh,args=(i,ourtitle,o,))
             a.setDaemon(True)
             our.append(a)
 
@@ -214,6 +214,15 @@ class mp_ourmclist():
 
         for i in our:
             i.join()
+
+        import xlwt
+        file = xlwt.Workbook(encoding='utf-8')
+        table = file.add_sheet('xcx')
+        table.write('序号','小程序名称','审核失败原因')
+        for i,p in enumerate(ourtitle):
+            for j,q in enumerate(p):
+                table.write(i,j,q)
+        file.save('xcx.xlsx')
 
     def releasecode(self,i,ourname):
             try:
@@ -259,8 +268,8 @@ if __name__ == "__main__":
     #x.get_request()#查看列表
     #x.commit()#设置模板
     # x.commitsh()#
-    x.commitour()#提交审核
-    #x.commitSH()#查询所有小程序审核状态
+    #x.commitour()#提交审核
+    x.commitSH()#查询所有小程序审核状态
     #x.releasecodeTh()#提交
 
 
