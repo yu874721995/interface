@@ -10,7 +10,7 @@ import sys
 
 class GetApi():
 
-    def __init__(self,host=None,api=None,filename=None):
+    def getapi(self,host=None,api=None,filename=None):
         if host is None or api is None or filename is None:
             raise ValueError('Please pass in the correct parameters.')
         SYS = sys.argv[0]
@@ -26,8 +26,16 @@ class GetApi():
                 file_path = os.path.dirname(os.path.abspath(SYS)) + '/' + self.config_path
                 self.config.read(file_path)
                 self.host = self.config.get('Host', host)
-                self.api = self.config.get('Api', api)
-                break
+                if host.split('_')[0] == 'c':
+                    self.api = self.config.get('xcApi', api)
+                    break
+                if host.split('_')[0] == 'web':
+                    self.api = self.config.get('webApi', api)
+                    break
+                if host.split('_')[0] == 'mp':
+                    self.api = self.config.get('mpApi', api)
+                    break
+
             else:#工作脚本的父目录的父目录中找
                 current_path = os.listdir(os.path.dirname(os.path.dirname(os.path.abspath(SYS))))#最上级目录(2层)
                 for s in current_path:
@@ -42,20 +50,28 @@ class GetApi():
                                 except Exception as e:
                                     raise ValueError(e)
                                 self.host = self.config.get('Host', host)
-                                self.api = self.config.get('Api', api)
-                                break
+                                if host.split('_')[0] == 'c':
+                                    self.api = self.config.get('xcApi', api)
+                                    break
+                                if host.split('_')[0] == 'web':
+                                    self.api = self.config.get('webApi', api)
+                                    break
+                                if host.split('_')[0] == 'mp':
+                                    self.api = self.config.get('mpApi', api)
+                                    break
+        return self.host+self.api
             # except Exception as e:
             #     print ('实在找不到了，大哥')
             #     return
 
-    def main(self):
+    def main(self,host,api,filename):
         try:
-            return self.host+self.api
+            return self.getapi(host,api,filename)
         except Exception as e:
             raise ValueError(e)
 
 if __name__ == '__main__':
-    x = GetApi('test_host','C_homePage','config.ini')
-    print (x.main())
+    x = GetApi()
+    print (x.main('C_test_host','C_homePage','config.ini'))
 
 

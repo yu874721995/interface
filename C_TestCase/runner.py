@@ -7,7 +7,8 @@
 from Public import HTMLTestRunner_Rewrite
 import unittest
 import time,os
-
+import sys
+print (sys.argv[0])
 
 report_path = os.path.dirname(os.path.abspath('.'))+'/InterFace/Test_report/'
 report_time = time.strftime('%y-%m-%d-%H-%M-%S',time.localtime(time.time()))

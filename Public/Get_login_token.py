@@ -18,12 +18,13 @@ class Get_Login():
 
     def __init__(self,workEnvironment=False):
         self.workEnvironment = workEnvironment
+        self.url = GetApi()
 
     def get_mp_login_interface(self):
         '''获取平台端token'''
         if self.workEnvironment == False:
             try:
-                mp_login_url = GetApi('mp_test_host','mp_login','config.ini').main()
+                mp_login_url = self.url.main('mp_test_host','mp_login','config.ini')
                 data = {
                     "account": "ggbadmin",
                     "pwd": "e10adc3949ba59abbe56e057f20f883e"
@@ -38,7 +39,7 @@ class Get_Login():
                 return
         else:
             try:
-                mp_login_url = GetApi('mp_host', 'mp_login', 'config.ini').main()
+                mp_login_url = self.url.main('mp_host', 'mp_login', 'config.ini')
                 data = {
                     "account": "ggbadmin",
                     "pwd": "f5dcc5a7cabbafd8695480c0edb7b35a"
@@ -56,7 +57,7 @@ class Get_Login():
         '''获取商家端token'''
         if self.workEnvironment == False:
             try:
-                web_login_url = GetApi('web_test_host','test_login','config.ini').main()
+                web_login_url = self.url.main('web_test_host','test_login','config.ini')
                 data = {
                     "account": "13530852030",
                     "pwd": "e10adc3949ba59abbe56e057f20f883e"
@@ -71,7 +72,7 @@ class Get_Login():
                 return
         else:
             try:
-                web_login_url = GetApi('web_host', 'test_login', 'config.ini').main()
+                web_login_url = self.url.main('web_host', 'test_login', 'config.ini')
                 data = {
                     "account": "18664309864",
                     "pwd": "ac140f9e701766ea44ded4aac0fbee6a"
@@ -87,7 +88,7 @@ class Get_Login():
 
     def get_C_token(self):
         if self.workEnvironment == False:
-            c_Loginurl = GetApi('C_test_host','phone_login','config.ini').main()
+            c_Loginurl = self.url.main('c_test_host','phone_login','config.ini')
             data = {
                 "MERCHANTID_C": "81136",
                 "channel_code": "81136",
@@ -112,7 +113,7 @@ class Get_Login():
                 mylog.error(e)
                 return
         else:
-            c_Loginurl = GetApi('C_host', 'phone_login', 'config.ini').main()
+            c_Loginurl = self.url.main('C_host', 'phone_login', 'config.ini')
             data = {
                 "MERCHANTID_C": "81136",
                 "channel_code": "81136",

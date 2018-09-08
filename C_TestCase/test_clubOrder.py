@@ -18,12 +18,15 @@ class CheckClubOrder(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        import sys
+        print(sys.argv[0])
         global order_id
         get_login =Get_Login()
         cls.C_token = get_login.get_C_token()
-        cls.Orderurl = GetApi('C_test_host', 'clubOrder','config.ini').main()
-        cls.ZJCpayurl = GetApi('C_test_host', 'mljpayclub','config.ini').main()
-        cls.xjPayUrl = GetApi('test_host', 'xjPayClub','config.ini').main()
+        cls.url = GetApi()
+        cls.Orderurl = cls.url.main('c_test_host', 'clubOrder','config.ini')
+        cls.ZJCpayurl = cls.url.main('web_test_host', 'mljpayclub','config.ini')
+        cls.xjPayUrl = cls.url.main('web_test_host', 'xjPayClub','config.ini')
         cls.web_token = get_login.get_test_login_interface()
 
     @classmethod

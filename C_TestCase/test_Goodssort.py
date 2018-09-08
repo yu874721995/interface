@@ -18,7 +18,10 @@ class test_goodssort(unittest.TestCase):
     #unittest单元测试框架固定格式
 
     def setUp(self):#用例初始化，初始化整个用例需要用到的配置参数
-        self.url = GetApi('C_host','C_findproject').main()
+        import sys
+        print(sys.argv[0])
+        self.url = GetApi()
+        self.listurl = self.url.main('c_test_host','C_findproject','config.ini')
         self.token = Get_Login().get_C_token()
 
     def tearDown(self):#用例执行完毕之后需要运行的代码
@@ -41,7 +44,7 @@ class test_goodssort(unittest.TestCase):
         s = ['彩光','快乐','泰式','丝白']
         for i in s:
             data['keyContent'] = i
-            r = requests.post(self.url, data=data, headers=headers)
+            r = requests.post(self.listurl, data=data, headers=headers)
             response = r.json()
             try:
                 assert response['status'] == 100

@@ -9,7 +9,7 @@ import unittest
 from Public.logger import Logger
 from C_TestCase.test_homepage import Test_HomePage
 from Public.get_api import GetApi
-from Public.
+from Public.Get_login_token import Get_Login
 
 mylog = Logger(logger='c_log').getlog()
 
@@ -17,14 +17,30 @@ class Test_project(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.homepage = Test_HomePage()
-        cls.token = get_login().
-        cls.detailUrl = GetApi('C_host','c_detail').main()
-        cls.hostList = GetApi('C_host','c_projectHostList').main()
+        cls.url = GetApi()
+        cls.token = Get_Login().get_C_token()
+        cls.detailUrl = cls.url.main('c_test_host','c_detail','config.ini')
+        cls.hostList = cls.url.main('c_test_host','c_projectHostList','config.ini')
+        cls.activityDetailUrl = cls.url.main('c_test_host','C_activityDetail','config.ini')
+        cls.avtivityDatail = Test_HomePage().test_HomePage()
 
     @classmethod
     def tearDownClass(cls):
         pass
+
+
+    def test_getAcDetail(cls):
+        '''C端活动详情'''
+        for i in cls.avtivityDatail['headList']:
+            data = {
+                "id": i['IMAGEID'],
+                "merchantId": "81167"
+            }
+            r =requests.post(cls.activityDetailUrl,data)
+            response = r.json()
+            assert response['status'] == 100
+            mylog.info('获取%s活动详情成功' %i['TITLE'])
+
 
     def test_projectHostList(cls):
         '''获取热门项目列表'''
@@ -42,7 +58,7 @@ class Test_project(unittest.TestCase):
             "pageIndex": "1",
             "requestType": "1",
             "solveSchemes": "",
-            "userId": "183796"
+            "userId": "254397"
         }
         headers = {
             'authorization': cls.token
@@ -62,7 +78,7 @@ class Test_project(unittest.TestCase):
         '''获取项目详情页'''
         data = {
             "cMerchantId": "81136",
-            "customerId": "195946",
+            "customerId": "254397",
             "login_merchant_id": "81136",
             "login_token": cls.token,
             "merchantId": "81167",
@@ -77,7 +93,7 @@ class Test_project(unittest.TestCase):
         mylog.info('项目详情接口状态返回值:%d' % response_code)
         try:
             assert response_code == 200
-            assert response['msg'] == '操作成功'
+            assert response['status'] == 100
             mylog.info('获取项目详情页成功')
         except Exception as e:
             mylog.error('获取项目详情页失败',e,response)
