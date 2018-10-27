@@ -16,29 +16,26 @@ class mp_ourmclist():
 
     def __init__(self,workEnvironment):
         self.workEnvironment = workEnvironment
+        if workEnvironment == False:
+            self.api = GetApi(host='mp_test_host',filename='config.ini')
+        else:
+            self.api = GetApi(host='mp_host', filename='config.ini')
         try:
             self.token = Get_Login(workEnvironment=False).get_mp_login_interface()
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
             raise ValueError(e)
+        self.mini_url = self.api.main(api='mp_mini_list')
+        self.Code_url = self.api.main(api='mp_Code')
+        self.commit_url = self.api.main(api='mp_commit_code')
+        self.cate_url = self.api.main(api='mp_wx_cate')
+        self.commitSh = self.api.main(api='mp_commitSh')
+        self.commitshenhe = self.api.main(api='commitshenhe')
+        self.release = self.api.main(api='release')
+        self.selectUrl = self.api.main(api='selectUrl')
+        self.settingUrl = self.api.main(api='settingUrl')
 
-        if self.workEnvironment == False:
-            self.mini_url = GetApi('mp_test_host', 'mp_mini_list','config.ini').main()
-            self.Code_url = GetApi('mp_test_host','mp_Code','config.ini').main()
-            self.commit_url = GetApi('mp_test_host','mp_commit_code','config.ini').main()
-            self.cate_url = GetApi('mp_test_host','mp_wx_cate','config.ini').main()
-            self.commitSh = GetApi('mp_test_host','mp_commitSh','config.ini').main()
-            self.commitshenhe = GetApi('mp_test_host','commitshenhe','config.ini').main()
-            self.release = GetApi('mp_test_host','release','config.ini').main()
-        else:
-            self.mini_url = GetApi('mp_host', 'mp_mini_list', 'config.ini').main()
-            self.Code_url = GetApi('mp_host', 'mp_Code', 'config.ini').main()
-            self.commit_url = GetApi('mp_host', 'mp_commit_code', 'config.ini').main()
-            self.cate_url = GetApi('mp_host', 'mp_wx_cate', 'config.ini').main()
-            self.commitSh = GetApi('mp_host', 'mp_commitSh', 'config.ini').main()
-            self.commitshenhe = GetApi('mp_host', 'commitshenhe', 'config.ini').main()
-            self.release = GetApi('mp_host', 'release', 'config.ini').main()
 
         self.get_request = self.get_request()
         self.code = self.get_code()
@@ -46,8 +43,9 @@ class mp_ourmclist():
     def get_request(self):
         data = {
             'pageNumber':1,
-            'pageSize':200
-            #'auditstatus':4 #已审核
+            'pageSize':300
+            #'auditstatus':0 #已审核
+            #'auditstatus': 1#失败
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -170,7 +168,6 @@ class mp_ourmclist():
         for i in ourThread:
             i.join()
 
-
     def commitsh(self,i,ourtitle,o):
         try:
             data = {
@@ -178,13 +175,13 @@ class mp_ourmclist():
             }
             r = requests.post(self.commitshenhe,data=data)
             res = r.json()
-            if r.json()['data']['status'] == 1:
+            if res['data']['status'] == 1:
                 mylog.info('审核失败')
-                s = [o,i[1],r.json()['data']['reason']]
+                s = [i[1],r.json()['data']['reason']]
                 ourtitle.append(s)
-            elif r.json()['data']['status'] == 2:
+            elif res['data']['status'] == 2:
                 mylog.info('审核中')
-            elif r.json()['data']['status'] == 0:
+            elif res['data']['status'] == 0:
                 mylog.info('已审核')
             else:
                 mylog.info('没提交审核')
@@ -194,7 +191,6 @@ class mp_ourmclist():
         except Exception as e:
             raise ValueError(e)
         #print (r.json()['data'])
-
 
     def commitSH(self):
         #print (self.get_request)
@@ -215,14 +211,15 @@ class mp_ourmclist():
         for i in our:
             i.join()
 
+        print (ourtitle)
         import xlwt
         file = xlwt.Workbook(encoding='utf-8')
         table = file.add_sheet('xcx')
-        table.write('序号','小程序名称','审核失败原因')
+        #table.write('序号','小程序名称','审核失败原因')
         for i,p in enumerate(ourtitle):
             for j,q in enumerate(p):
                 table.write(i,j,q)
-        file.save('xcx.xlsx')
+        file.save('xcx.xls')
 
     def releasecode(self,i,ourname):
             try:
@@ -260,8 +257,31 @@ class mp_ourmclist():
 
         print (ourname)
 
+    def selectUrls(self,i):
+        print (i)
+        # try:
+        #     r = requests.post(self.selectUrl,data={"appid":i[0]})
+        #     response = r.json()
+        #     if response['status'] != 500:
+        #         if response['data']['webviewdomain'].__len__() == 0:
+        #             sr = requests.post(self.settingUrl,data={'appid':i[0]})
+        #             mylog.info('{}设置成功'.format(i[1]))
+        #         else:
+        #             pass
+        # except Exception as e:
+        #     mylog.info(e)
 
-
+    def settingUrls(self):
+        our = []
+        for i in self.get_request:
+            a = threading.Thread(target=self.selectUrls,args=(i,))
+            a.setDaemon(True)
+            our.append(a)
+        for i in our:
+            time.sleep(0.5)
+            i.start()
+        for i in our:
+            i.join()
 
 if __name__ == "__main__":
     x = mp_ourmclist(workEnvironment=True)
@@ -269,8 +289,9 @@ if __name__ == "__main__":
     #x.commit()#设置模板
     # x.commitsh()#
     #x.commitour()#提交审核
-    x.commitSH()#查询所有小程序审核状态
+    #x.commitSH()#查询所有小程序审核状态
     #x.releasecodeTh()#提交
+    x.settingUrls() #设置所有小程序业务域名
 
 
 

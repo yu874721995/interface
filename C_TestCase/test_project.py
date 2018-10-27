@@ -17,11 +17,12 @@ class Test_project(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.url = GetApi()
+        cls.url = GetApi(host='c_test_host',filename='config.ini')
         cls.token = Get_Login().get_C_token()
-        cls.detailUrl = cls.url.main('c_test_host','c_detail','config.ini')
-        cls.hostList = cls.url.main('c_test_host','c_projectHostList','config.ini')
-        cls.activityDetailUrl = cls.url.main('c_test_host','C_activityDetail','config.ini')
+        cls.detailUrl = cls.url.main(api='c_detail')
+        cls.hostList = cls.url.main(api='c_projectHostList')
+        cls.activityDetailUrl = cls.url.main(api='C_activityDetail')
+        cls.proCategoryUrl = cls.url.main(api='C_proCategory')#类别
         cls.avtivityDatail = Test_HomePage().test_HomePage()
 
     @classmethod
@@ -38,41 +39,80 @@ class Test_project(unittest.TestCase):
             }
             r =requests.post(cls.activityDetailUrl,data)
             response = r.json()
+            print (response)
             assert response['status'] == 100
             mylog.info('获取%s活动详情成功' %i['TITLE'])
 
 
     def test_projectHostList(cls):
-        '''获取热门项目列表'''
+        '''获取项目列表及热门项目'''
+        beautyType = cls.test_proCategory()
+        beautyType.append('')
+        for item in beautyType:
+            data = {
+                "beautType": item['id'],
+                "cMerchantId": "81136",
+                "countsum": "0",
+                "currentPrice": "1",
+                "keyWord": "",
+                "login_merchant_id": "81136",
+                "login_token": cls.token,
+                "maxPrice": "",
+                "merchantId": "81136",
+                "minPrice": "0",
+                "pageIndex": "1",
+                "requestType": "1",
+                "solveSchemes": "",
+                "userId": "254397"
+            }
+            headers = {
+                'authorization': cls.token
+            }
+            r = requests.post(cls.hostList,data=data,headers=headers)
+            response = r.json()
+            resp_code = r.status_code
+            mylog.info('项目列表状态码：%d' % resp_code)
+            try:
+                assert response['msg'] == '操作成功'
+                mylog.info('获取%s列表成功' %item['name'])
+            except Exception as e:
+                mylog.error('获取%s项目列表失败' %item['name'],e,resp_code,response)
+                raise ValueError(e)
+
+    def test_proCategory(cls):
+        '''获取项目大类'''
         data = {
-            "beautType": "",
-            "cMerchantId": "81136",
-            "countsum": "0",
-            "currentPrice": "1",
-            "keyWord": "",
-            "login_merchant_id": "81136",
-            "login_token": cls.token,
-            "maxPrice": "",
-            "merchantId": "81136",
-            "minPrice": "0",
-            "pageIndex": "1",
-            "requestType": "1",
-            "solveSchemes": "",
-            "userId": "254397"
+            "beautyBigId":"",
+            "cMerchantId":81136,
+            "terminal":"xcx",
+            "appCode":"29",
+            "terminal_interface_type":"MiniProgram",
+            "login_token":"",
+            "login_merchant_id":81136
         }
         headers = {
             'authorization': cls.token
         }
-        r = requests.post(cls.hostList,data=data,headers=headers)
+        r = requests.post(cls.proCategoryUrl, data=data, headers=headers)
         response = r.json()
         resp_code = r.status_code
         mylog.info('热门项目列表状态码：%d' % resp_code)
         try:
+            print (response['msg'])
             assert response['msg'] == '操作成功'
-            mylog.info('获取热门项目列表成功')
+            items = []
+            itemy = {}
+            for item in response['data']:
+                itemy['id'] = item['ID']
+                itemy['name'] = item['NAME']
+                items.append(itemy)
+            mylog.info('获取项目类别成功')
+            return items
         except Exception as e:
-            mylog.error('获取热门项目列表失败',e,resp_code,response)
+            mylog.error('获取项目类别失败', e, resp_code, response)
             raise ValueError(e)
+
+
 
     def test_projectDetail(cls):
         '''获取项目详情页'''
