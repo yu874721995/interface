@@ -40,12 +40,15 @@ class GetApi():
                     if self.host.split('_')[0] == 'c':
                         self.getapi = self.config.get('xcApi', self.api)
                         break
-                    if self.host.split('_')[0] == 'web':
+                    elif self.host.split('_')[0] == 'web':
                         self.getapi = self.config.get('webApi', self.api)
                         break
-                    if self.host.split('_')[0] == 'mp':
+                    elif self.host.split('_')[0] == 'mp':
                         self.getapi = self.config.get('mpApi', self.api)
                         break
+                    else:
+                        self.getapi = self.config.get('qiubo', self.api)
+
 
                 else:#工作脚本的父目录的父目录中找
                     current_path = os.listdir(os.path.dirname(os.path.dirname(os.path.abspath(SYS))))#最上级目录(2层)
@@ -64,12 +67,15 @@ class GetApi():
                                     if self.host.split('_')[0] == 'c':
                                         self.getapi = self.config.get('xcApi', self.api)
                                         break
-                                    if self.host.split('_')[0] == 'web':
+                                    elif self.host.split('_')[0] == 'web':
                                         self.getapi = self.config.get('webApi', self.api)
                                         break
-                                    if self.host.split('_')[0] == 'mp':
+                                    elif self.host.split('_')[0] == 'mp':
                                         self.getapi = self.config.get('mpApi', self.api)
                                         break
+                                    else:
+                                        self.getapi = self.config.get('qiubo', self.api)
+
             except Exception as e:
                 print('实在找不到了，大哥',e)
                 return None

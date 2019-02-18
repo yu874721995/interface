@@ -35,6 +35,7 @@ class mp_ourmclist():
         self.release = self.api.main(api='release')
         self.selectUrl = self.api.main(api='selectUrl')
         self.settingUrl = self.api.main(api='settingUrl')
+        self.chehuishenhe = self.api.main(api='chehuishenhe')
 
 
         self.get_request = self.get_request()
@@ -43,9 +44,10 @@ class mp_ourmclist():
     def get_request(self):
         data = {
             'pageNumber':1,
-            'pageSize':300
-            #'auditstatus':0 #已审核
-            #'auditstatus': 1#失败
+            'pageSize':300,
+            'auditstatus':0 #已审核
+            #'auditstatus':4  #
+            #'auditstatus':1#失败
         }
         r = requests.post(self.mini_url,data)
         our_app = []
@@ -132,7 +134,7 @@ class mp_ourmclist():
             ourThread.append(a)
 
         for i in ourThread:
-            time.sleep(1)
+            time.sleep(0.5)
             i.start()
 
         for i in ourThread:
@@ -145,16 +147,27 @@ class mp_ourmclist():
         r = requests.post(self.cate_url, data={'appid': self.get_request[0][0]})
         cate = r.json()['category_list']
         for i in cate:
-            if i['third_class'] == '美容':
-                data['address'] = 'pages/index/index'
-                data['first_class'] = i['first_class']
-                data['first_id'] = i['first_id']
-                data['second_class'] = i['second_class']
-                data['second_id'] = i['second_id']
-                data['third_class'] = i['third_class']
-                data['third_id'] = i['third_id']
-                data['title'] = '首页'
-                continue
+            if i['third_class']:
+                if i['third_class'] == '美容':
+                    data['address'] = 'pages/index/index'
+                    data['first_class'] = i['first_class']
+                    data['first_id'] = i['first_id']
+                    data['second_class'] = i['second_class']
+                    data['second_id'] = i['second_id']
+                    data['third_class'] = i['third_class']
+                    data['third_id'] = i['third_id']
+                    data['title'] = '首页'
+                    continue
+                elif i['third_class'] == '私立医疗机构':
+                    data['address'] = 'pages/index/index'
+                    data['first_class'] = i['first_class']
+                    data['first_id'] = i['first_id']
+                    data['second_class'] = i['second_class']
+                    data['second_id'] = i['second_id']
+                    data['third_class'] = i['third_class']
+                    data['third_id'] = i['third_id']
+                    data['title'] = '首页'
+                    continue
         for i in self.get_request:
             if i[3] != 81136:
                 a = threading.Thread(target=self.cateAndcommit,args=(i,data))
@@ -177,12 +190,16 @@ class mp_ourmclist():
             res = r.json()
             if res['data']['status'] == 1:
                 mylog.info('审核失败')
-                s = [i[1],r.json()['data']['reason']]
+                s = [i[1],'审核失败',r.json()['data']['reason']]
                 ourtitle.append(s)
             elif res['data']['status'] == 2:
+                s = [i[1],'审核中','']
                 mylog.info('审核中')
+                ourtitle.append(s)
             elif res['data']['status'] == 0:
+                s = [i[1], '审核成功','']
                 mylog.info('已审核')
+                ourtitle.append(s)
             else:
                 mylog.info('没提交审核')
             # for i in self.get_request:
@@ -221,7 +238,7 @@ class mp_ourmclist():
                 table.write(i,j,q)
         file.save('xcx.xls')
 
-    def releasecode(self,i,ourname):
+    def releasecode(self,i,ourname,s):
             try:
                 time.sleep(1)
                 data = {
@@ -235,16 +252,19 @@ class mp_ourmclist():
                 if res['msg'] == '操作成功':
                     print ('{}提交成功'.format(i[1]))
                     ourname.append(i[1])
+                elif 'status not' in res['msg']:
+                    s.append(i[1])
                 else:
                     print ('{}提交失败或已提交:{}'.format(i[1],res))
             except Exception as e:
                 print('{}提交失败或已提交'.format(i[1]))
 
     def releasecodeTh(self):
+        s = []
         ourname = []
         our = []
         for i in self.get_request:
-            a = threading.Thread(target=self.releasecode,args=(i,ourname,))
+            a = threading.Thread(target=self.releasecode,args=(i,ourname,s))
             a.setDaemon(True)
             our.append(a)
 
@@ -255,21 +275,20 @@ class mp_ourmclist():
         for i in our:
             i.join()
 
-        print (ourname)
+        print (s)
 
     def selectUrls(self,i):
-        print (i)
-        # try:
-        #     r = requests.post(self.selectUrl,data={"appid":i[0]})
-        #     response = r.json()
-        #     if response['status'] != 500:
-        #         if response['data']['webviewdomain'].__len__() == 0:
-        #             sr = requests.post(self.settingUrl,data={'appid':i[0]})
-        #             mylog.info('{}设置成功'.format(i[1]))
-        #         else:
-        #             pass
-        # except Exception as e:
-        #     mylog.info(e)
+        try:
+            r = requests.post(self.selectUrl,data={"appid":i[0]})
+            response = r.json()
+            if response['status'] != 500:
+                if response['data']['webviewdomain'].__len__() == 0:
+                    sr = requests.post(self.settingUrl,data={'appid':i[0]})
+                    mylog.info('{}设置成功'.format(i[1]))
+                else:
+                    pass
+        except Exception as e:
+            mylog.error(e)
 
     def settingUrls(self):
         our = []
@@ -283,6 +302,27 @@ class mp_ourmclist():
         for i in our:
             i.join()
 
+
+    def chehuishenhes(self,i):
+        try:
+            r = requests.post(self.chehuishenhe,data={"appid":i[0]})
+            print (i[1])
+        except Exception as e:
+            mylog.error(e)
+
+    def Thead_chehuishenhes(self):
+        our = []
+        for i in self.get_request:
+            a = threading.Thread(target=self.chehuishenhes, args=(i,))
+            a.setDaemon(True)
+            our.append(a)
+        for i in our:
+            time.sleep(0.5)
+            i.start()
+        for i in our:
+            i.join()
+
+
 if __name__ == "__main__":
     x = mp_ourmclist(workEnvironment=True)
     #x.get_request()#查看列表
@@ -290,8 +330,10 @@ if __name__ == "__main__":
     # x.commitsh()#
     #x.commitour()#提交审核
     #x.commitSH()#查询所有小程序审核状态
-    #x.releasecodeTh()#提交
-    x.settingUrls() #设置所有小程序业务域名
+    x.releasecodeTh()#提交
+    #x.settingUrls() #设置所有小程序业务域名
+    #x.Thead_chehuishenhes()#撤销审核
+
 
 
 

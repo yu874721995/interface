@@ -21,9 +21,20 @@
 #             # }
 #             # r = requests.post(geturl,data=data)
 #             # print (r.json())
-#             # break
-a = []
-if a.__len__() == 0:
-    print (1)
-else:
-    print (2)
+# #             # break
+# a = []
+# if a.__len__() == 0:
+#     print (1)
+# else:
+# #     print (2)
+# a = ['a',2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,None,3,3,3]
+# print(all(a))
+# if a:
+#     print (1)
+# else:
+#     print(2)
+#
+
+
+
+print(chr(0x81))

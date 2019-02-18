@@ -57,9 +57,25 @@ class Get_Login():
         '''获取商家端token'''
         if self.workEnvironment == False:
             try:
-                web_login_url = self.url.main('web_test_host','test_login','config.ini')
+                web_login_url = self.url.main('web_host','test_login','config.ini')
                 data = {
-                    "account": "13530852030",
+                    "account": "13316521269",
+                    "pwd": "896675512b24e11715f33d87728ef7ba"
+                }
+                r = requests.post(web_login_url, data=data)
+                token = r.json()['token']
+                token = "Bearer " + token
+                mylog.info('登录成功，获取web端token.....')
+                return token
+            except Exception as e:
+                mylog.error('-----------------',e)
+                print (r.text)
+                return
+        else:
+            try:
+                web_login_url = self.url.main('web_test_host', 'test_login', 'config.ini')
+                data = {
+                    "account": "13564002102",
                     "pwd": "e10adc3949ba59abbe56e057f20f883e"
                 }
                 r = requests.post(web_login_url, data=data)
@@ -68,22 +84,8 @@ class Get_Login():
                 mylog.info('登录成功，获取web端token.....')
                 return token
             except Exception as e:
-                mylog.error(e)
-                return
-        else:
-            try:
-                web_login_url = self.url.main('web_host', 'test_login', 'config.ini')
-                data = {
-                    "account": "18664309864",
-                    "pwd": "ac140f9e701766ea44ded4aac0fbee6a"
-                }
-                r = requests.post(web_login_url, data=data)
-                token = r.json()['token']
-                token = "Bearer " + token
-                mylog.info('登录成功，获取web端token.....')
-                return token
-            except Exception as e:
-                mylog.error(e)
+                mylog.error('------------',e)
+                print(r.text)
                 return
 
     def get_C_token(self):

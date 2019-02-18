@@ -13,10 +13,8 @@ from Public.logger import Logger
 from Public.Get_login_token import Get_Login
 from Public.get_api import GetApi
 from random import randint
-import configparser
-#import pandas
 
-
+mylog = Logger(logger='getItems').getlog()
 class get_Items(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
