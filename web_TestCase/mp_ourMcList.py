@@ -37,18 +37,13 @@ class mp_ourmclist():
         self.settingUrl = self.api.main(api='settingUrl')
         self.chehuishenhe = self.api.main(api='chehuishenhe')
 
-
-        self.get_request = self.get_request()
-        self.code = self.get_code()
-
-    def get_request(self):
+    def get_request(self,work=False):
         data = {
-            'pageNumber':1,
-            'pageSize':300,
-            'auditstatus':0 #已审核
-            #'auditstatus':4  #
-            #'auditstatus':1#失败
+            'pageNumber': 1,
+            'pageSize': 300
         }
+        if work == True:
+            data['auditstatus'] = 0
         r = requests.post(self.mini_url,data)
         our_app = []
         for i in r.json()['data']:
@@ -63,9 +58,10 @@ class mp_ourmclist():
 
     #根据小程序的appid获取所有模板,并取最新的一个
     def get_code(self):
+        get_request = self.get_request()
         r = ''
         data = {
-            'appid':self.get_request[0][0]
+            'appid':get_request[0][0]
         }
         try:
             r = requests.post(self.Code_url,data)
@@ -84,7 +80,7 @@ class mp_ourmclist():
         return template_id,user_version,user_desc
 
     #提交模板
-    def commitCode(self,i):
+    def commitCode(self,i,code):
         data = {}
         r = ''
         if i[2] == 1:
@@ -96,9 +92,9 @@ class mp_ourmclist():
             'merchant_name':i[1],
             'tradeRole':i[2],
             'merchantid_c':i[3],
-            'templateId':self.code[0],
-            'userDesc':self.code[2],
-            'userVersion':self.code[1]
+            'templateId':code[0],
+            'userDesc':code[2],
+            'userVersion':code[1]
         }
         try:
             r = requests.post(self.commit_url,json=data)
@@ -127,12 +123,13 @@ class mp_ourmclist():
             mylog.error('----到{}报错啦报错啦!!!!!!!!!!!!----'.format(i[1]))
     #多个线程进行模板设置
     def commit(self):
+        code = self.get_code()
+        get_request = self.get_request()
         ourThread = []
-        for i in self.get_request:
-            a = threading.Thread(target=self.commitCode,args=(i,))
+        for i in get_request:
+            a = threading.Thread(target=self.commitCode,args=(i,code,))
             a.setDaemon(True)
             ourThread.append(a)
-
         for i in ourThread:
             time.sleep(0.5)
             i.start()
@@ -142,9 +139,10 @@ class mp_ourmclist():
 
     #启动多个线程进行提交
     def commitour(self):
+        get_request = self.get_request()
         ourThread = []
         data = {}
-        r = requests.post(self.cate_url, data={'appid': self.get_request[0][0]})
+        r = requests.post(self.cate_url, data={'appid': get_request[0][0]})
         cate = r.json()['category_list']
         for i in cate:
             if i['third_class']:
@@ -168,7 +166,7 @@ class mp_ourmclist():
                     data['third_id'] = i['third_id']
                     data['title'] = '首页'
                     continue
-        for i in self.get_request:
+        for i in get_request:
             if i[3] != 81136:
                 a = threading.Thread(target=self.cateAndcommit,args=(i,data))
                 a.setDaemon(True)
@@ -207,16 +205,14 @@ class mp_ourmclist():
 
         except Exception as e:
             raise ValueError(e)
-        #print (r.json()['data'])
 
     def commitSH(self):
-        #print (self.get_request)
+        get_request = self.get_request()
         o = 0
         ourtitle = []
         our = []
-        for i in self.get_request:
+        for i in get_request:
             o += 1
-            print (i)
             a = threading.Thread(target=self.commitsh,args=(i,ourtitle,o,))
             a.setDaemon(True)
             our.append(a)
@@ -228,7 +224,6 @@ class mp_ourmclist():
         for i in our:
             i.join()
 
-        print (ourtitle)
         import xlwt
         file = xlwt.Workbook(encoding='utf-8')
         table = file.add_sheet('xcx')
@@ -260,10 +255,11 @@ class mp_ourmclist():
                 print('{}提交失败或已提交'.format(i[1]))
 
     def releasecodeTh(self):
+        get_request = self.get_request(work=True)
         s = []
         ourname = []
         our = []
-        for i in self.get_request:
+        for i in get_request:
             a = threading.Thread(target=self.releasecode,args=(i,ourname,s))
             a.setDaemon(True)
             our.append(a)
@@ -274,8 +270,6 @@ class mp_ourmclist():
 
         for i in our:
             i.join()
-
-        print (s)
 
     def selectUrls(self,i):
         try:
@@ -291,8 +285,9 @@ class mp_ourmclist():
             mylog.error(e)
 
     def settingUrls(self):
+        get_request = self.get_request()
         our = []
-        for i in self.get_request:
+        for i in get_request:
             a = threading.Thread(target=self.selectUrls,args=(i,))
             a.setDaemon(True)
             our.append(a)
@@ -306,13 +301,13 @@ class mp_ourmclist():
     def chehuishenhes(self,i):
         try:
             r = requests.post(self.chehuishenhe,data={"appid":i[0]})
-            print (i[1])
         except Exception as e:
             mylog.error(e)
 
     def Thead_chehuishenhes(self):
+        get_request = self.get_request()
         our = []
-        for i in self.get_request:
+        for i in get_request:
             a = threading.Thread(target=self.chehuishenhes, args=(i,))
             a.setDaemon(True)
             our.append(a)
@@ -323,16 +318,26 @@ class mp_ourmclist():
             i.join()
 
 
+    def run(self,type=None):
+        if type == 1:
+            self.commitSH()  # 查询所有小程序审核状态
+        elif type == 2:
+            self.commit()#设置模板
+        elif type == 3:
+            self.commitour()#提交审核
+        elif type == 4:
+            self.releasecodeTh()#发布版本
+        elif type == 5:
+            self.settingUrls() #设置所有小程序业务域名
+        elif type == 6:
+            self.Thead_chehuishenhes()#撤销审核
+        else:
+            self.get_request()#查看列表
+
+
 if __name__ == "__main__":
     x = mp_ourmclist(workEnvironment=True)
-    #x.get_request()#查看列表
-    #x.commit()#设置模板
-    # x.commitsh()#
-    #x.commitour()#提交审核
-    #x.commitSH()#查询所有小程序审核状态
-    x.releasecodeTh()#提交
-    #x.settingUrls() #设置所有小程序业务域名
-    #x.Thead_chehuishenhes()#撤销审核
+    x.run(1)
 
 
 
