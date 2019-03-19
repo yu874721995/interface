@@ -224,14 +224,22 @@ class mp_ourmclist():
         for i in our:
             i.join()
 
-        import xlwt
-        file = xlwt.Workbook(encoding='utf-8')
-        table = file.add_sheet('xcx')
-        #table.write('序号','小程序名称','审核失败原因')
-        for i,p in enumerate(ourtitle):
-            for j,q in enumerate(p):
-                table.write(i,j,q)
-        file.save('xcx.xls')
+        # import xlwt
+        # file = xlwt.Workbook(encoding='utf-8')
+        # table = file.add_sheet('xcx')
+        # #table.write('序号','小程序名称','审核失败原因')
+        # print(ourtitle)
+        # for i,p in enumerate(ourtitle):
+        #     for j,q in enumerate(p):
+        #         table.write(i,j,q)
+        # file.save('xcx.xls')
+        import pandas as pd
+        data = pd.read_excel('xcxs.xls')
+        data['序号'] = [i for i in range(len(ourtitle))]
+        data['小程序名称'] = [i[0] for i in ourtitle]
+        data['审核状态'] = [i[1] for i in ourtitle]
+        data['审核失败原因'] = [i[2] for i in ourtitle]
+        data.to_excel('xcxs.xls')
 
     def releasecode(self,i,ourname,s):
             try:
