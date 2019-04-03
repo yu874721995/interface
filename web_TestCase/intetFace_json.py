@@ -147,3 +147,17 @@ class InterFace_json():
         "userName": "余孛",
         "userPhone": "13513131313"
     }
+
+    #获取未购买项目
+    projectlist = {"userId": 344100,
+                   "merchantId": 81137,
+                   "pageFrom": 1,
+                   "pageTo": 20,
+                   "type": 2,
+                   "searchWord": ""}
+    #获取技师
+    mrslist = {"merchant_id":81137,
+               "startDate":1,
+               "endDate":1,
+               "customerId":344100,
+               "projects":''}
