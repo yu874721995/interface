@@ -511,21 +511,32 @@
 #     if r.json()['data'].__len__() == 0:
 #         print (i)
 
-a = {}
-a['s'] = ''
-print (a)
+# a = {}
+# a['s'] = ''
+# print (a)
+#
+#
+#
+#
+# URL='https://ggbxcwx.ydm01.cn/api/ydm_xc_new/listUnbookedOrderType'
+# data = {
+#     'appCode':40,
+#     'pageIndex':1
+# }
+# h = {
+#     "authorization":'Bearer 17560501-a1ed-44aa-b2c8-c7ac1a2d40e9'
+# }
+# import requests
+# r = requests.post(url=URL,json=data,headers=h)
+# print (r.json())
 
 
 
 
-URL='https://ggbxcwx.ydm01.cn/api/ydm_xc_new/listUnbookedOrderType'
-data = {
-    'appCode':40,
-    'pageIndex':1
-}
-h = {
-    "authorization":'Bearer 17560501-a1ed-44aa-b2c8-c7ac1a2d40e9'
-}
-import requests
-r = requests.post(url=URL,json=data,headers=h)
-print (r.json())
+
+
+
+def read_txt():
+    with open('parme.txt','r') as p:
+        p.read()
+print(read_txt())

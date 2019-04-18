@@ -234,12 +234,12 @@ class mp_ourmclist():
         #         table.write(i,j,q)
         # file.save('xcx.xls')
         import pandas as pd
-        data = pd.read_excel('xcxs.xls')
+        data = pd.read_excel('xcxs1.xls')
         data['序号'] = [i for i in range(len(ourtitle))]
         data['小程序名称'] = [i[0] for i in ourtitle]
         data['审核状态'] = [i[1] for i in ourtitle]
         data['审核失败原因'] = [i[2] for i in ourtitle]
-        data.to_excel('xcxs.xls')
+        data.to_excel('xcxs1.xls')
 
     def releasecode(self,i,ourname,s):
             try:
