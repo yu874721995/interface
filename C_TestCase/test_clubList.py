@@ -16,8 +16,8 @@ class Test_clubList(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.url = GetApi()
-        cls.clubPackListUrl = cls.url.main('c_test_host','c_clubPackList','config.ini')
-        cls.clubListUrl = cls.url.main('c_test_host','c_clubList','config.ini')
+        cls.clubPackListUrl = cls.url.main('c_test_host','c_clubPackList','config3.ini')
+        cls.clubListUrl = cls.url.main('c_test_host','c_clubList','config3.ini')
 
     @classmethod
     def tearDownClass(cls):

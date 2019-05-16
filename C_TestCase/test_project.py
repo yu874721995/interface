@@ -17,7 +17,7 @@ class Test_project(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.url = GetApi(host='c_test_host',filename='config.ini')
+        cls.url = GetApi(host='c_test_host',filename='config3.ini')
         cls.token = Get_Login().get_C_token()
         cls.detailUrl = cls.url.main(api='c_detail')
         cls.hostList = cls.url.main(api='c_projectHostList')

@@ -82,7 +82,7 @@ class GetApi():
         return self.gethost+self.getapi
 
 if __name__ == '__main__':
-    x = GetApi(host='mp_host',filename='config.ini')
+    x = GetApi(host='mp_host',filename='config3.ini')
     print (x.main(api='mp_Code'))
     print (x.main(api='mp_commit_code'))
 

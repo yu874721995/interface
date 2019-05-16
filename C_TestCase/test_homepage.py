@@ -20,10 +20,10 @@ class Test_HomePage(unittest.TestCase):
     def setUpClass(cls):
         cls.host = GetApi()
         cls.url = {
-            'homePageUrl' :cls.host.main('c_test_host','C_homePage','config.ini'),
-            'C_loginUrl'  :cls.host.main('c_test_host','phone_login','config.ini'),
-            'accessCityUrl' : cls.host.main('c_test_host','C_accessCity','config.ini'),
-            'accessShopUrl':cls.host.main('c_test_host','C_accessShop','config.ini')
+            'homePageUrl' :cls.host.main('c_test_host','C_homePage','config3.ini'),
+            'C_loginUrl'  :cls.host.main('c_test_host','phone_login','config3.ini'),
+            'accessCityUrl' : cls.host.main('c_test_host','C_accessCity','config3.ini'),
+            'accessShopUrl':cls.host.main('c_test_host','C_accessShop','config3.ini')
                 }
 
     @classmethod

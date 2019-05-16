@@ -14,8 +14,8 @@ from web_TestCase.intetFace_json import InterFace_json
 class test_mchBonus_ten():
 
     def __init__(self):
-        self.api = GetApi(host='web_test_host', filename='config.ini')
-        self.apis = GetApi(host='c_test_host',filename='config.ini')
+        self.api = GetApi(host='web_test_host', filename='config3.ini')
+        self.apis = GetApi(host='c_test_host',filename='config3.ini')
         self.token = Get_Login(workEnvironment=True).get_test_login_interface()
         self.create_project = self.apis.main(api='create_project')#创建订单
         self.ajx_pay = self.api.main(api='ajx_pay')#现金支付

@@ -50,6 +50,6 @@ def inini(host, api, filename):
 
         except Exception as e:
             print ('error')
-print (inini('test_host','mp_login','config.ini'))
+print (inini('test_host','mp_login','config3.ini'))
 
 

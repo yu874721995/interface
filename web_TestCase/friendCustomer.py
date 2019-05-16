@@ -17,8 +17,8 @@ from random import randint
 class friend():
 
     def __init__(self):
-        self.getapi = GetApi(host='c_test_host',filename='config.ini')
-        self.getapis = GetApi(host='web_test_host',filename='config.ini')
+        self.getapi = GetApi(host='c_test_host',filename='config3.ini')
+        self.getapis = GetApi(host='web_test_host',filename='config3.ini')
         self.get_code = self.getapi.main(api='get_code')
         self.addwhitephone = self.getapis.main(api='addwhitephone')
         self.phone = str(15500000000 + randint(0,1000000))

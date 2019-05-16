@@ -21,7 +21,7 @@ class test_goodssort(unittest.TestCase):
         import sys
         print(sys.argv[0])
         self.url = GetApi()
-        self.listurl = self.url.main('c_test_host','C_findproject','config.ini')
+        self.listurl = self.url.main('c_test_host','C_findproject','config3.ini')
         self.token = Get_Login().get_C_token()
 
     def tearDown(self):#用例执行完毕之后需要运行的代码

@@ -14,7 +14,7 @@ mylog = Logger(logger='webLog').getlog()
 class Detail(unittest.TestCase):
 
     def setUp(self):
-        self.detailUrl = GetApi('test_host','Detail','config.ini').main()
+        self.detailUrl = GetApi('test_host','Detail','config3.ini').main()
         self.token = Get_Login().get_test_token()
 
     def tearDown(self):

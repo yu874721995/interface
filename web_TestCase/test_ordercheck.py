@@ -11,7 +11,7 @@ from Public.Get_login_token import Get_Login
 import threading
 import time
 
-url = GetApi('web_host','checkorder','config.ini').main()
+url = GetApi('web_host','checkorder','config3.ini').main()
 token = Get_Login('ZS').get_test_token()
 aaa = []
 x = get_excel('orderNo.xlsx','Sheet1').get_oneColum(1,'values')

@@ -17,9 +17,9 @@ class mp_ourmclist():
     def __init__(self,workEnvironment):
         self.workEnvironment = workEnvironment
         if workEnvironment == False:
-            self.api = GetApi(host='mp_test_host',filename='config.ini')
+            self.api = GetApi(host='mp_test_host',filename='config3.ini')
         else:
-            self.api = GetApi(host='mp_host', filename='config.ini')
+            self.api = GetApi(host='mp_host', filename='config3.ini')
         try:
             self.token = Get_Login(workEnvironment=False).get_mp_login_interface()
             mylog.info('token获取成功......')

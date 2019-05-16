@@ -14,7 +14,7 @@ from Public.Get_login_token import Get_Login
 class ManageStore(object):
 
     def __init__(self):
-        self.api = GetApi(host='web_test_host', filename='config.ini')
+        self.api = GetApi(host='web_test_host', filename='config3.ini')
         self.token = Get_Login(True).get_test_login_interface()
         self.interface = InterFace_json
         self.createorder = self.api.main(api='createorder')

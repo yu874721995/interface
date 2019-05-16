@@ -43,7 +43,7 @@ import sys,os
 #             print (newpathfile)
 import configparser
 config = configparser.ConfigParser()
-config.read('D:\PyCharm2017.3.2\pyfolder\InterFace/config/config.ini',encoding='utf-8')
+config.read('D:\PyCharm2017.3.2\pyfolder\InterFace/config/config3.ini',encoding='utf-8')
 s = config.get('Host','test_host')
 a = config.get('Api','mp_login')
 print (s,a)
