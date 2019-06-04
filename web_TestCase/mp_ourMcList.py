@@ -8,7 +8,7 @@
 import requests,json,os,time
 from Public.logger import Logger
 from Public.get_api import GetApi
-from Public.Get_login_token import Get_Login
+#from Public.Get_login_token import Get_Login
 import threading
 
 mylog = Logger(logger='mp_log').getlog()
@@ -21,7 +21,7 @@ class mp_ourmclist():
         else:
             self.api = GetApi(host='mp_host', filename='config3.ini')
         try:
-            self.token = Get_Login(workEnvironment=False).get_mp_login_interface()
+            #self.token = Get_Login(workEnvironment=False).get_mp_login_interface()
             mylog.info('token获取成功......')
         except Exception as e:
             mylog.error('token获取失败')
@@ -107,14 +107,15 @@ class mp_ourmclist():
 
     def cateAndcommit(self,i,data):
         try:
-            headers = {
-                'Authorization':self.token
-            }
+            # headers = {
+            #     'Authorization':self.token
+            # }
             datas = {
                 'appid':i[0],
                 'itemList':[data]
             }
-            r = requests.post(self.commitSh,json=datas,headers=headers)
+           # r = requests.post(self.commitSh,json=datas,headers=headers)
+            r = requests.post(self.commitSh, json=datas)
             if r.json()['msg'] == '操作成功':
                 mylog.info('{}提交成功'.format(i[1]))
             else:
@@ -233,13 +234,13 @@ class mp_ourmclist():
         #     for j,q in enumerate(p):
         #         table.write(i,j,q)
         # file.save('xcx.xls')
-        import pandas as pd
-        data = pd.read_excel('xcxs1.xls')
-        data['序号'] = [i for i in range(len(ourtitle))]
-        data['小程序名称'] = [i[0] for i in ourtitle]
-        data['审核状态'] = [i[1] for i in ourtitle]
-        data['审核失败原因'] = [i[2] for i in ourtitle]
-        data.to_excel('xcxs1.xls')
+        # import pandas as pd
+        # data = pd.read_excel('xcxs1.xls')
+        # data['序号'] = [i for i in range(len(ourtitle))]
+        # data['小程序名称'] = [i[0] for i in ourtitle]
+        # data['审核状态'] = [i[1] for i in ourtitle]
+        # data['审核失败原因'] = [i[2] for i in ourtitle]
+        # data.to_excel('xcxs1.xls')
 
     def releasecode(self,i,ourname,s):
             try:
@@ -247,10 +248,11 @@ class mp_ourmclist():
                 data = {
                     'appid':i[0]
                 }
-                headers = {
-                    'Authorization':self.token
-                }
-                r = requests.post(self.release,data=data,headers=headers)
+                # headers = {
+                #     'Authorization':self.token
+                # }
+                #r = requests.post(self.release,data=data,headers=headers)
+                r = requests.post(self.release, data=data)
                 res = r.json()
                 if res['msg'] == '操作成功':
                     print ('{}提交成功'.format(i[1]))
