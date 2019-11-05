@@ -1055,8 +1055,9 @@ class _TestResult(TestResult):
 class HTMLTestRunner(Template_mixin):
     """
     """
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
+    def __init__(self, test_name,stream=sys.stdout, verbosity=1, title=None, description=None,):
         self.stream = stream
+        self.test_name = test_name
         self.verbosity = verbosity
         if title is None:
             self.title = self.DEFAULT_TITLE
@@ -1159,6 +1160,7 @@ class HTMLTestRunner(Template_mixin):
 
     def _generate_report(self, result, caseinfo):
         rows = []
+        s= 0
         sortedResult = self.sortResult(result.result)
         for cid, (cls, cls_results) in enumerate(sortedResult):
             # subtotal for a class
@@ -1175,7 +1177,7 @@ class HTMLTestRunner(Template_mixin):
                 name = "%s.%s" % (cls.__module__, cls.__name__)
             doc = cls.__doc__ and cls.__doc__.split("\n")[0] or ""
             desc = doc and '%s: %s' % (name, doc) or name
-
+            s += 1
             row = self.REPORT_CLASS_TMPL % dict(
                 style = ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',
                 desc = desc,
@@ -1186,9 +1188,10 @@ class HTMLTestRunner(Template_mixin):
                 cid = 'c%s' % (cid+1),
             )
             rows.append(row)
-
+            i = 0
             for tid, (n,t,o,e) in enumerate(cls_results):
-                self._generate_report_test(rows, cid, tid, n, t, o, e, caseinfo)
+                self._generate_report_test(rows, cid, tid, n, t, o, e, caseinfo,case_name=self.test_name[i])
+                i += 1
 
         report = self.REPORT_TMPL % dict(
             test_list = ''.join(rows),
@@ -1200,7 +1203,7 @@ class HTMLTestRunner(Template_mixin):
         return report
 
 
-    def _generate_report_test(self, rows, cid, tid, n, t, o, e, caseinfo):
+    def _generate_report_test(self, rows, cid, tid, n, t, o, e, caseinfo,case_name=''):
         # e.g. 'Pt1.1', 'Ft1.1','E1.1,' etc
         has_output = bool(o or e)
         if n == 0:
@@ -1211,7 +1214,8 @@ class HTMLTestRunner(Template_mixin):
             tid = 'Et%s.%s' % (cid+1,tid+1)
         name = t.id().split('.')[-1]
         doc = t.shortDescription() or ""
-        desc = doc and ('%s: %s' % (name, doc)) or name
+        # desc = doc and ('%s: %s' % (name, doc)) or name
+        desc = '用例名称：'+ case_name
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
 
         # o and e should be byte string because they are collected from stdout and stderr?
