@@ -8,49 +8,57 @@ from Public.get_api import GetApi
 from Public.logger import Logger
 import unittest
 import requests
+from ddt import ddt,data,unpack
 
-mylog = Logger(logger='C_log').getlog()
+# mylog = Logger(logger='C_log').getlog()
 
+@ddt
 class Test_clubList(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.url = GetApi()
-        cls.clubPackListUrl = cls.url.main('c_test_host','c_clubPackList','config3.ini')
-        cls.clubListUrl = cls.url.main('c_test_host','c_clubList','config3.ini')
+        pass
 
     @classmethod
     def tearDownClass(cls):
         pass
 
-    def test_clubPackList(cls):
-        '''C端疗程卡列表'''
-        data = {
-            "login_merchant_id":"81136",
-            "login_token":'',
-            "merchant_id":"81136",
-            "pageIndex":"1",
-            "pageSize":"20",
-            "shop_id":"81167"
-        }
-        r =requests.post(cls.clubPackListUrl,data)
-        response = r.json()
-        assert response['data']
-        return response
+    @data([{'token':'noget','h':'111'}],[])
+    def test_clubPackList(cls,args):
+        '''hhhhhhhhhh'''
+        pass
 
-    def test_clubList(cls):
-        '''C端充值卡列表'''
-        data = {
-            "login_merchant_id": "81136",
-            "login_token": '',
-            "merchant_id": "81136",
-            "pageNumber": "1",
-            "pageSize": "20"
-        }
-        r = requests.post(cls.clubListUrl, data)
-        response = r.json()
-        assert response['pets']
-        return response
+        # setattr(cls.__doc__,'sadsadsadsadad',cls.test_clubPackList)
+        # data = {
+        #     "login_merchant_id":"81136",
+        #     "login_token":'',
+        #     "merchant_id":"81136",
+        #     "pageIndex":"1",
+        #     "pageSize":"20",
+        #     "shop_id":"81167"
+        # }
+        # r =requests.post(cls.clubPackListUrl,data)
+        # response = r.json()
+        # assert response['data']
+        # print(response)
+        # return response
+        print(args)
+
+    # def test_clubList(cls):
+    #     '''C端充值卡列表'''
+    #     data = {
+    #         "login_merchant_id": "81136",
+    #         "login_token": '',
+    #         "merchant_id": "81136",
+    #         "pageNumber": "1",
+    #         "pageSize": "20"
+    #     }
+    #     print(cls.clubListUrl)
+    #     r = requests.post(cls.clubListUrl, data)
+    #     response = r.json()
+    #     assert response['pets']
+    #     print(response)
+    #     return response
 
 
 
