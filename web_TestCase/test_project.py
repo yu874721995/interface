@@ -7,7 +7,7 @@
 import requests
 import unittest
 from Public.logger import Logger
-from C_TestCase.test_homepage import Test_HomePage
+from web_TestCase.test_homepage import Test_HomePage
 from Public.get_api import GetApi
 from Public.Get_login_token import Get_Login
 

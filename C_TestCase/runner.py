@@ -10,9 +10,9 @@ import time,os
 import sys
 print (sys.argv[0])
 
-report_path = os.path.dirname(os.path.abspath('.'))+'/InterFace/Test_report/'
+report_path = os.path.dirname(os.path.abspath('.'))+'/interFace/Test_report/'
 report_time = time.strftime('%y-%m-%d-%H-%M-%S',time.localtime(time.time()))
-report_name = 'D:\PyCharm2017.3.2\pyfolder\InterFace\Test_report\\'+str(report_time)+"-Test_report.html"
+report_name = 'D:\pyfold\interFace\Test_report\\'+str(report_time)+"-Test_report.html"
 fp = open(report_name,'wb')
 
 
@@ -22,7 +22,8 @@ for testsuites in discover:
     for i in testsuites:
         testsuite.addTest(i)
 
-runner = HTMLTestRunner_Rewrite.HTMLTestRunner(stream=fp,title='自动化测试报告',description='用例执行情况')
+runner = HTMLTestRunner_Rewrite.HTMLTestRunner(['sdasdsad','asdsadsadsadsadasd'],stream=fp,title='自动化测试报告',description='用例执行情况')
+print(testsuite)
 runner.run(testsuite)
 
 

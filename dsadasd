@@ -1,0 +1,333 @@
+commit 6fe7d7dc223a8035386e80f0b840bb07b3074684 (HEAD -> master)
+Merge: d24af01 e565218
+Author: 余孛 <qc04@jingshukj.com.cn>
+Date:   Thu Jun 6 14:23:05 2019 +0800
+
+    'add'
+
+commit e565218042a158ccfe6aa17bb67e8bfe7a5af1f7 (hh1)
+Author: 余孛 <qc04@jingshukj.com.cn>
+Date:   Thu Jun 6 14:22:42 2019 +0800
+
+    'add'
+
+commit d24af01c9a7659be90e9c400a6da7a0e982f0a83 (origin/master, origin/HEAD)
+Author: 余孛 <qc04@jingshukj.com.cn>
+Date:   Thu Jun 6 14:20:08 2019 +0800
+
+    'addPILandSessionRquest'
+
+commit 74a6edbe8406f1aade8a18bed569cba7810fe6d3 (test)
+Author: 余孛 <qc04@jingshukj.com.cn>
+Date:   Tue Jun 4 19:50:11 2019 +0800
+
+    'r'
+
+commit 45e4a24f7b5cb65bd4abb339902772650320c3ac (haha)
+Author: 余孛 <qc04@jingshukj.com.cn>
+Date:   Tue Jun 4 19:46:59 2019 +0800
+
+    'f'
+
+commit 17385a87ab5c6e398ad7c81c73cc58c9aab9de5a
+Author: yu874721995 <yubei874721995@163.com>
+Date:   Thu May 16 16:09:52 2019 +0800
+
+    '1'
+
+commit 0790f9eac00f4849c5419b03be4e95dd07404047 (origin/nwe)
+Author: yubei <yubei874721995@163.com>
+Date:   Thu Apr 18 09:25:36 2019 +0800
+
+    '我也不知道提交了什么鬼'
+
+commit 78103930212fc5ededf67519407546fd4f74a51d
+Author: yubei <yubei874721995@163.com>
+Date:   Wed Apr 3 17:32:52 2019 +0800
+
+    '1'
+
+commit 7aca02ae08f6913ccdf0eeee555879f763aa80a2
+Author: yubei <yubei874721995@163.com>
+Date:   Wed Apr 3 17:32:14 2019 +0800
+
+    '1'
+
+commit 2f771a78d9018180fb70c5c278f08554f825aecf
+Author: yubei <yubei874721995@163.com>
+Date:   Wed Apr 3 17:31:35 2019 +0800
+
+    '1'
+
+commit e38e9234071c3feb0e404fdc93305a2d7fef46a7
+Author: yubei <yubei874721995@163.com>
+Date:   Wed Apr 3 17:30:34 2019 +0800
+
+    '1'
+
+commit 5c54cd4334f8f4e98947528155619ea7c95f3cba
+Author: yubei <yubei874721995@163.com>
+Date:   Wed Apr 3 17:20:44 2019 +0800
+
+    '111'
+
+commit 8b27ae54e5167da85b64e3a9fad16c2539c1a132
+Author: yubei <yubei874721995@163.com>
+Date:   Tue Mar 19 14:17:58 2019 +0800
+
+    ''
+
+commit 8c061fe70906bb2a8fa4953320df5cf449f47e2b
+Author: yubei <yubei874721995@163.com>
+Date:   Tue Mar 19 13:45:45 2019 +0800
+
+    'config'
+
+commit 9d1d3b06a2207ee72ccbc4d2eba9a542f7d916cf
+Author: yubei <yubei874721995@163.com>
+Date:   Tue Mar 19 13:37:56 2019 +0800
+
+    'config'
+
+commit 4bf7e2aca25be8f11c3a87c0abff00db3dc86436
+Author: yubei <yubei874721995@163.com>
+Date:   Tue Mar 19 12:09:42 2019 +0800
+
+    'cofig'
+
+commit 01a5f4c2dfdf5be109d657b1ab2616c780d2c5bb
+Author: yubei <yubei874721995@163.com>
+Date:   Tue Mar 19 12:04:15 2019 +0800
+
+    'xigai'
+
+commit 4de3e5a44fcb14b3884d417eb120f4c2bbcdce2e
+Author: yubei <yubei874721995@163.com>
+Date:   Mon Feb 25 14:40:36 2019 +0800
+
+    'OK'
+
+commit 0ee275767567239aa3b74403f94bc339754002e7
+Author: yubei <yubei874721995@163.com>
+Date:   Fri Feb 22 14:49:43 2019 +0800
+
+    '优化提交审核'
+
+commit 820d1da08ee7d29bb6794f06270f96f2edc9428f
+Author: yubei <yubei874721995@163.com>
+Date:   Mon Feb 18 16:33:48 2019 +0800
+
+    '时间久了，提交一下'
+
+commit d29a4da3e67c6440db4641b370a3c4da7c74b95d
+Author: yu <yubei874721995@163.com>
+Date:   Sat Oct 27 16:02:13 2018 +0800
+
+    '新增一个用例'
+
+commit 45bed3a17f7e460c2aedb1f251bb7e5f5dd21fef
+Author: yu <yubei874721995@163.com>
+Date:   Sat Sep 8 17:40:59 2018 +0800
+
+    '新增'
+
+commit fbf7b519b573f0292b348591701ff487d8555e92
+Author: yu <yubei874721995@163.com>
+Date:   Fri Sep 7 16:46:16 2018 +0800
+
+    '导出审核失败原因'
+
+commit 580711223accbc8a534bf26391e943d060c007ea
+Author: yu <yubei874721995@163.com>
+Date:   Tue Sep 4 18:49:57 2018 +0800
+
+    '新的配置获取'
+
+commit 11e5d43456a01ce2283175d82140026e1ebd08ca
+Author: yu <yubei874721995@163.com>
+Date:   Tue Sep 4 09:20:47 2018 +0800
+
+    '补充'
+
+commit 0e3229a279a7512e8faa988471afca0357d07c61
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 24 22:00:19 2018 +0800
+
+    '提取失败原因'
+
+commit da3183dae5affd66eeaf8d1cb4d166b5ffd9fc7f
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jul 23 09:50:25 2018 +0800
+
+    '查询小程序审核状态'
+
+commit 22c2c437b845b176eece7e92f3e7464413fd4e23
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jul 19 20:39:57 2018 +0800
+
+    '123'
+
+commit b5b805f75049d23bfad407e66e2a82459f2e307c
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jul 19 20:38:41 2018 +0800
+
+    '实例化一次可以只用初始化一次'
+
+commit 4f789c254c4dc49bde4c0fea42b7029af7d06773
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jul 19 20:35:03 2018 +0800
+
+    '优化提交小程序'
+
+commit 0fed26756087a3d8bc255e100276e08585e64dcb
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jul 19 11:57:56 2018 +0800
+
+    '完善路径寻找'
+
+commit c1cc91c1fc27cdd961ef6801219a36d437899146
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jul 16 14:11:01 2018 +0800
+
+    '修改平台端为正式环境'
+
+commit 9068aa831ba9ca8caa07bef6a3089aca2a96a84a
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jul 16 12:20:36 2018 +0800
+
+    'xin'
+
+commit 8337c6ad37edc78c0313bcb0f4fc400088908648
+Author: yu <yubei874721995@163.com>
+Date:   Wed Jul 11 18:53:06 2018 +0800
+
+    '0711'
+
+commit f7e7592e49fee20c322b4275d92be043deb97601
+Author: yu <yubei874721995@163.com>
+Date:   Wed Jul 11 10:27:27 2018 +0800
+
+    '错误梳理'
+
+commit c6ef1479c65fe105e865ac2ae70e8a8a67fac55f
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 10 21:11:50 2018 +0800
+
+    '修改提交审核'
+
+commit 31337f3cd0b7047860e1d4eff82c9794c80abb5e
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 10 20:57:30 2018 +0800
+
+    '提交模板'
+
+commit 9b919c7a094f68f590e71ae76b6ba6c6a9da50cd
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 10 20:51:29 2018 +0800
+
+    '兼容jenkins'
+
+commit 2681da850136f665420c30a58a35b06a08dbba90
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 10 20:46:44 2018 +0800
+
+    '修改相对路径全局生效'
+
+commit 9e954ab0f75613687eaefc20e49240218a1c2000
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 10 19:44:54 2018 +0800
+
+    '增加平台端一键提交一键审核'
+
+commit 7a3f93900912a15554c89d1b70f39251644d1fba
+Author: yu <yubei874721995@163.com>
+Date:   Tue Jul 3 15:39:54 2018 +0800
+
+    '修改路径写死的问题'
+
+commit 9c4ac87eb3da1fd3825a29154c20b729b58f53e5
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jul 2 19:46:25 2018 +0800
+
+    '修复所有异常报告中无法处理'
+
+commit 203b10ba8a97f5f2dfb0ea8f6dba5aeb5cbfcb5a
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jul 2 18:40:02 2018 +0800
+
+    '0702'
+
+commit 787c309b267d736597662a21c203049aff27425a
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 28 13:33:43 2018 +0800
+
+    '修改'
+
+commit c31938e638acd9e53591c2c07b11b49f578107cd
+Author: yu <yubei874721995@163.com>
+Date:   Wed Jun 27 11:53:26 2018 +0800
+
+    '增加权限设置'
+
+commit 05eb19b6ad08265c490d8211ed4654260c63ca60
+Author: yu <yubei874721995@163.com>
+Date:   Mon Jun 25 17:26:36 2018 +0800
+
+    '修改订单'
+
+commit de257caaaf069b2b0e686467b741803bcd4c374e
+Author: yu <yubei874721995@163.com>
+Date:   Fri Jun 22 18:06:33 2018 +0800
+
+    '增加热门项目详情'
+
+commit a80f9fdbff511a5c7b8074293dda17909f916251
+Author: yu <yubei874721995@163.com>
+Date:   Fri Jun 22 09:42:02 2018 +0800
+
+    '新增项目详情接口'
+
+commit 5ee2e1369f38d76fead789824e8c2c752dd9de29
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 20:15:26 2018 +0800
+
+    '返回C端token'
+
+commit 531c3841ffb8c0b7e5f63f9bfdeb747aa1cb6f86
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 20:06:04 2018 +0800
+
+    'ooo'
+
+commit 796dbf406fc5249a597cd703d00847f617dc5a66
+Merge: f2c6dcd 7369656
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 20:04:45 2018 +0800
+
+    Merge branch 'master' into nwe
+
+commit 73696568581ee43f17e83513a36086716f33ec8d
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 20:03:18 2018 +0800
+
+    'oo'
+
+commit 3aeb3f9d9347c7c4abe894cd2dcb44af83a57d66
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 19:59:51 2018 +0800
+
+    'os'
+
+commit f2c6dcdb4bcaad4e0e8332a2fa81944d05ff213e
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 19:57:46 2018 +0800
+
+    'ee'
+
+commit 689d20ead038d243e88ae3a3ea214e980feb5bc2
+Author: yu <yubei874721995@163.com>
+Date:   Thu Jun 21 19:54:05 2018 +0800
+
+    'ss'
+
+commit 2a7a6c6e215ef2b9ca5dcec78f9f04d92815a342
